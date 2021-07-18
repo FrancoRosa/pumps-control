@@ -1,4 +1,4 @@
-import Card from './Card'
+import CardHome from './CardHome'
 
 const Home = () => {
   
@@ -14,11 +14,14 @@ const Home = () => {
   }
 
   return (
-    <div className="columns">
-      {pumps.map(pump => (
-        <Card key={pump.id} pump={pump} handleClick={() => handleClick(pump)}/>
-      ))}
-    </div>
+    <>
+      <h1 className="title is-2 has-text-centered">DECON SEVEN</h1>
+      <div className="columns">
+        {pumps.map(pump => (
+          <CardHome key={pump.id} pump={pump} handleClick={() => handleClick(pump)}/>
+        ))}
+      </div>
+    </>
   )
 };
 

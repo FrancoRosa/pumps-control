@@ -1,4 +1,4 @@
-const Card = ({pump, handleClick}) => {
+const CardHome = ({pump, handleClick}) => {
   const {name, on} = pump;
   return (
     <div className="column">
@@ -27,4 +27,4 @@ const Card = ({pump, handleClick}) => {
   );
 };
 
-export default Card
+export default CardHome
