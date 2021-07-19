@@ -74,6 +74,16 @@ def start():
   response.headers["Content-Type"] = "application/json"
   return response
 
+@app.route('/api/info/<id>')
+def info(id):
+  id = int(id)
+  response = make_response(jsonify({
+    "id": id,
+    'total_pulses': pumps_debug[id]['total_pulses']
+  }), 200)
+  response.headers["Content-Type"] = "application/json"
+  return response
+
 @socketio.on('message')
 def handle_message(msg):
   print("Message: " + msg)
