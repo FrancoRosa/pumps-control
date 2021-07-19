@@ -6,6 +6,7 @@ const Input = ({label, value, placeholder, handleChange}) =>{
         <input 
           className="input"
           type="number"
+          min="0"
           placeholder={placeholder}
           onChange={handleChange}
           value={value}/>
