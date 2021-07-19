@@ -16,6 +16,13 @@ buttons = [
   Button(12)
 ]
 
+gpios = [
+  'GPIO18',
+  'GPIO23',
+  'GPIO24',
+  'GPIO12',
+]
+
 
 # while True:
 #     for i, pump in enumerate(pumps):
@@ -26,8 +33,17 @@ buttons = [
 #       sleep(.2)
 
 
-for i, button in enumerate(buttons):
-    button.when_pressed = pumps[i].on
-    button.when_released = pumps[i].off
+def pressed_fc(button):
+  print('button:',button.pin)
+  pumps[gpios.index(str(button.pin))].on()
+
+def released_fc(button):
+  print('button:',button.pin)
+  pumps[gpios.index(str(button.pin))].off()
+
+for button in buttons:
+    button.when_pressed = pressed_fc
+    button.when_released = released_fc
+
 
 pause()

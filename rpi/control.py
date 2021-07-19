@@ -8,6 +8,10 @@ import json
 
 rpi = uname()[4] != 'x86_64'
 
+if rpi:
+  from gpiozero import LED, Button
+  from signal import pause
+
 app = Flask(__name__)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret'
@@ -23,10 +27,54 @@ pumps_debug = [
 ]
 # 
 def send_status_rpi():
-  t = 0
+  global pumps_debug
+  pumps = [LED(4), LED(17), LED(27), LED(22)]
+  gpios = ['GPIO18', 'GPIO23', 'GPIO24', 'GPIO12']
+  buttons = [Button(18),Button(23),Button(24),Button(12)]
+
+  def pulse_fc(button):
+    id = gpios.index(str(button.pin))
+    pump = pumps[id]
+    pump['total_pulses'] += 1 
+    pump['pulses'] += 1
+    pumps_debug[id] = pump 
+    socketio.send(json.dumps({
+      'id': pump['id'],
+      'pulses_count':pump['pulses_count'],
+      'time_count':pump['time_count'],
+      'on':pump['on'],
+    }), broadcast=True)   
+
+  for button in buttons:
+      button.when_pressed = pressed_fc
+      button.when_released = released_fc
+
   while True:
-    print('... rpi')
-    sleep(5)        
+    for pump in pumps_debug:
+      if pump['pulses_count'] >= pump['pulses'] or pump['time_count'] >= pump['timeout']:
+        if pump['on']: 
+          pump['on'] = False
+          pump['pulses_count'] = 0
+          pump['time_count'] = 0
+          socketio.send(json.dumps({
+          'id': pump['id'],
+          'pulses_count':pump['pulses_count'],
+          'time_count':pump['time_count'],
+          'on':pump['on'],
+        }), broadcast=True)
+      
+      if pump['on']:
+        pump['total_pulses'] += 1
+        pump['time_count'] += 1
+        pump['pulses_count'] += 1
+      
+      if pump['on']:
+        socketio.send(json.dumps({
+          'id': pump['id'],
+          'pulses_count':pump['pulses_count'],
+          'time_count':pump['time_count'],
+          'on':pump['on'],
+        }), broadcast=True)   
 
 def send_status_debug():
   global pumps_debug
@@ -99,4 +147,4 @@ def info(id):
 def handle_message(msg):
   print("Message: " + msg)
 
-app.run(debug=True, port=port)
+app.run(debug=False, port=port)
