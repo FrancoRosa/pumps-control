@@ -32,19 +32,29 @@ def send_status_debug():
   global pumps_debug
   while True:
     for pump in pumps_debug:
+      if pump['pulses_count'] >= pump['pulses'] or pump['time_count'] >= pump['timeout']:
+        if pump['on']: 
+          pump['on'] = False
+          pump['pulses_count'] = 0
+          pump['time_count'] = 0
+          socketio.send(json.dumps({
+          'id': pump['id'],
+          'pulses_count':pump['pulses_count'],
+          'time_count':pump['time_count'],
+          'on':pump['on'],
+        }), broadcast=True)
+      
       if pump['on']:
         pump['total_pulses'] += 1
         pump['time_count'] += 1
         pump['pulses_count'] += 1
-      if pump['pulses_count'] >= pump['pulses'] or pump['time_count'] >= pump['timeout']:
-        pump['on'] = False
-        pump['pulses_count'] = 0
-        pump['time_count'] = 0
+      
       if pump['on']:
         socketio.send(json.dumps({
           'id': pump['id'],
           'pulses_count':pump['pulses_count'],
           'time_count':pump['time_count'],
+          'on':pump['on'],
         }), broadcast=True)
     sleep(1)        
 
@@ -79,6 +89,7 @@ def info(id):
   id = int(id)
   response = make_response(jsonify({
     "id": id,
+    "on": pumps_debug[id]['on'],
     'total_pulses': pumps_debug[id]['total_pulses']
   }), 200)
   response.headers["Content-Type"] = "application/json"
@@ -87,6 +98,5 @@ def info(id):
 @socketio.on('message')
 def handle_message(msg):
   print("Message: " + msg)
-
 
 app.run(debug=True, port=port)

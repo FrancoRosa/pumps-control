@@ -4,9 +4,9 @@ const CardConfig = ({pump, handleChange}) => {
   const {name, timeout, value, volume, volPerPulse} = pump;
   return (
     <div className="column">
-      <div class="card m-4 p-4">
-        <header class="card-header">
-          <p class="card-header-title title is-3 is-centered">
+      <div className="card m-4 p-4">
+        <header className="card-header">
+          <p className="card-header-title title is-3 is-centered">
             {name}
           </p>
         </header>

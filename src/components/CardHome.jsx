@@ -2,9 +2,9 @@ const CardHome = ({pump, handleClick}) => {
   const {name, on} = pump;
   return (
     <div className="column">
-      <div class="card m-4 p-4">
-        <header class="card-header">
-          <p class="card-header-title title is-3 is-centered">
+      <div className="card m-4 p-4">
+        <header className="card-header">
+          <p className="card-header-title title is-3 is-centered">
             {name}
           </p>
         </header>
@@ -14,7 +14,7 @@ const CardHome = ({pump, handleClick}) => {
             {on ? 'On': 'Off'}
           </span>
         </div>
-        <footer class="card-footer">
+        <footer className="card-footer">
           <button 
             className={`button is-large is-outlined card-footer-item ${on && 'is-loading'}` }
             onClick={handleClick}
