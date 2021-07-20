@@ -26,10 +26,13 @@ pumps_config = [
   {'id': 3, 'total_pulses': 223, 'on': False, 'timeout':10, 'time_count': 0, 'pulses': 18, 'pulses_count':0},
 ]
 
+if rpi:
+  pumps = [LED(4), LED(17), LED(27), LED(22)]
+
+
 # This manages sensor pulses 
 def volume_counter():
   global pumps_config
-  pumps = [LED(4), LED(17), LED(27), LED(22)]
   gpios = ['GPIO18', 'GPIO23', 'GPIO24', 'GPIO12']
   buttons = [Button(18),Button(23),Button(24),Button(12)]
 
@@ -88,9 +91,13 @@ Thread(target=volume_counter if rpi else send_status_debug, args=[]).start()
 
 
 def time_counter():
-  global pumps_config
+  global pumps_config, pumps
   time_step = 0.1
   while True:
+    if rpi:
+      for i, pump in enumerate(pumps):
+        pump.on() if pumps_config[i]['on'] else pump.off()
+
     for pump in pumps_config:
       if pump['on']:
         pump['time_count'] += time_step
@@ -108,11 +115,11 @@ def start_pump(id, pulses, timeout):
   pump['pulses'] = pulses
   pump['timeout'] = timeout
   pump['pulses_count'] = 0
-  pump['time_count'] = 0
+  pump['time_count'] = 0.1
   pump['on'] = True
   pumps_config[id] = pump
   socketio.send(json.dumps(pump), broadcast=True)
-  
+
 @app.route('/')
 def index():
   return "... control server running on port %s"%port
