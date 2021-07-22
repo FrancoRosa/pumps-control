@@ -16,7 +16,7 @@ const CardHome = ({pump, handleClick}) => {
             </span>
           </p>
           <p>Volume send: {pulses_count}</p>
-          {time_count == 0 ? '': <p>Time elapsed: {time_count.toFixed(1)} s</p>}
+          {time_count === 0 ? '': <p>Time elapsed: {time_count.toFixed(0)} s</p>}
         </div>
         <footer className="card-footer">
           <button 

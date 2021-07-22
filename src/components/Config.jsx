@@ -14,7 +14,7 @@ const Config = () => {
   return (
     <div className="columns">
       {pumps.map(pump => (
-        <CardConfig key={pump.id} pump={pump}/>
+        <CardConfig key={pump.id} pump={pump} handleChange={handleChange}/>
       ))}
     </div>
   )

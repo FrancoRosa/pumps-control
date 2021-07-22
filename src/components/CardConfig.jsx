@@ -1,7 +1,7 @@
 import Input from "./Input";
 
 const CardConfig = ({pump, handleChange}) => {
-  const {name, timeout, value, volume, volPerPulse} = pump;
+  const {name, timeout, volume, volPerPulse} = pump;
   return (
     <div className="column">
       <div className="card m-4 p-4">
