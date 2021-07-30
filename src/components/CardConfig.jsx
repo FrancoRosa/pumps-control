@@ -6,7 +6,7 @@ const CardConfig = ({ pump }) => {
   const {pumps, setPumps} = useContext(PumpsContext)
   
   const [timeout, setTimeout] = useState(pump.timeout)
-  const [volume, setVolume] = useState(pump.pulses*pump.vol_per_pulse)
+  const [volume, setVolume] = useState((pump.pulses*pump.vol_per_pulse).toFixed(1))
   const [vol_per_pulse, setVolPerPulse] = useState(pump.vol_per_pulse)
   
   const saveConfig = () => {
@@ -30,7 +30,7 @@ const CardConfig = ({ pump }) => {
             setValue={setTimeout}/>
           <Input label="Volume" 
             value={volume} placeholder="Volume in fl oz" 
-            changed={pump.pulses*pump.vol_per_pulse != volume} 
+            changed={(pump.pulses*pump.vol_per_pulse).toFixed(1) != volume} 
             setValue={setVolume}/>
           <Input label="Volume per Pulse"
             value={vol_per_pulse} placeholder="Volume in fl oz" 
