@@ -1,4 +1,6 @@
-const Input = ({label, value, placeholder, handleChange}) =>{
+import { useState } from "react"
+
+const Input = ({label, value, placeholder, setValue}) =>{
   return (
     <div className="field">
       <label className="label">{label}</label>
@@ -8,7 +10,7 @@ const Input = ({label, value, placeholder, handleChange}) =>{
           type="number"
           min="0"
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={e => setValue(e.target.value)}
           value={value}/>
       </div>
     </div>
