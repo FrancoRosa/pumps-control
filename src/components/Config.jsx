@@ -13,7 +13,7 @@ const Config = () => {
   return (
     <div className="columns">
       {pumps.map(pump => (
-        <CardConfig key={pump.id} pump={pump.id} pumps={pumps}/>
+        <CardConfig key={pump.id} pump={pump}/>
       ))}
     </div>
   )
