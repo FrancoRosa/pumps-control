@@ -82,7 +82,7 @@ def send_status_debug():
         socketio.send(json.dumps({
           'id': pump['id'],
           'pulses_count':pump['pulses_count'],
-          'time_count':pump['time_count'],
+          'time_count':round(pump['time_count'],1),
           'on':pump['on'],
         }), broadcast=True)
     sleep(1)        

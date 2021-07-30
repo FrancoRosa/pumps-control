@@ -34,6 +34,13 @@ const App = () => {
   return (
     <>
       <Tabs />
+        {
+          pumps.map(pump => 
+          <p className="has-text-success">
+            {JSON.stringify(pump)}
+          </p>)
+        }
+        <p className="success"></p>
         <Redirect exact from="/" to="/home" />
         <div className="container">
           <PumpsContext.Provider value={{ pumps, setPumps}}>

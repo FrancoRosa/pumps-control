@@ -1,5 +1,5 @@
 const CardHome = ({pump, handleClick}) => {
-  const {name, on, pulses_count, time_count} = pump;
+  const {name, on, pulses_count, time_count, vol_per_pulse} = pump;
   return (
     <div className="column">
       <div className="card m-4 p-4">
@@ -15,8 +15,8 @@ const CardHome = ({pump, handleClick}) => {
               {on ? 'Active': 'Off'}
             </span>
           </p>
-          <p>Volume send: {pulses_count}</p>
-          {time_count === 0 ? '': <p>Time elapsed: {time_count.toFixed(0)} s</p>}
+          <p>Volume send: {(pulses_count*vol_per_pulse).toFixed(1)}</p>
+          <p>Time elapsed: {time_count.toFixed(1)} s</p>
         </div>
         <footer className="card-footer">
           <button 

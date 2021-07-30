@@ -14,9 +14,6 @@ const Home = () => {
   return (
     <>
       <h1 className="title is-2 has-text-centered">DECON SEVEN</h1>
-      {pumps.map(pump => (
-        <p>{JSON.stringify(pump)}</p>  
-      ))}
       <div className="columns">
         {pumps.map(pump => (
           <CardHome key={pump.id} pump={pump} handleClick={() => handleClick(pump)}/>
