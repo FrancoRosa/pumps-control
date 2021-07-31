@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import Tabs from './Tabs';
 import Home from './Home';
 import Config from './Config';
+import Calibrate from './Calibrate';
 import { PumpsContext } from '../js/PumpsContext';
 const socket = io.connect('http://localhost:9999');
 
@@ -47,6 +48,7 @@ const App = () => {
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/config" component={Config} />
+              <Route path="/Calibrate" component={Calibrate} />
             </Switch>
           </PumpsContext.Provider>
         </div>
