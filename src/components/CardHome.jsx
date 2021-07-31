@@ -15,8 +15,13 @@ const CardHome = ({pump, handleClick}) => {
               {on ? 'Active': 'Off'}
             </span>
           </p>
+<<<<<<< HEAD
           <p>Volume send: {pulses_count.toFixed(1)}</p>
           {time_count == 0 ? '': <p>Time elapsed: {time_count.toFixed(1)} s</p>}
+=======
+          <p>Volume send: {pulses_count}</p>
+          {time_count === 0 ? '': <p>Time elapsed: {time_count.toFixed(0)} s</p>}
+>>>>>>> 9f6f6922eac6808839b1c60af8aa685c7dee05b7
         </div>
         <footer className="card-footer">
           <button 
