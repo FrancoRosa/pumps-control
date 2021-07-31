@@ -1,12 +1,12 @@
 import { useContext, useEffect,  } from 'react';
-import { startPump } from '../api/api';
+import { startControlledPump } from '../api/api';
 import { PumpsContext } from '../js/PumpsContext';
 import CardHome from './CardHome'
 
 const Home = () => {
 
   const handleClick = pump => {
-    startPump(pump).then(resp => console.log(resp))
+    startControlledPump(pump).then(resp => console.log(resp))
   }
 
   const {pumps, setPumps} = useContext(PumpsContext)

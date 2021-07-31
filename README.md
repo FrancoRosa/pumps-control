@@ -42,3 +42,22 @@ Even though the Raspberry Pi has an on board wifi a usb wifi adapter will be use
 5. Calibration
     - Users can test flow rate periodically in calibration screen to compare to flow meter
 
+## Deliverables:
+- Dosage pumps communicate start/stop with RPI	0	0	4	0
+- Dosage pumps measure volume from pulse count	0	0	4	0
+- User interface as depicted in PRD (GUI2)	16	0	0	0
+- Dispenser setup for three volumes	0	0	4	0
+- RPI commmuniate with flow meter via pulse count	0	0	4	0
+- Calibration screen allows user to change mix volume	6	0	0	0
+- Calibration screen allows user to run pump manually to prime	6	0	0	0
+- Calibration screen allows each pump to be ran manually for testing volume	6	0	0	0
+- RPI communicate with onboard WIFI antenna for server access	0	0	4	0
+- Usage reports generated and sent/retrieved from admin panel	0	8	8	0
+- Set services/ui to run from boot	0	0	4	0
+- Build phisical test environment to emulate inputs and ouputs	0	0	4	0
+- Admin experience				
+- Can send software updates to RPI	0	0	4	0
+- Can view reports of useage from RPI	0	2	2	0
+- Can add / remove user accounts	0	4	4	0
+- Can track historical data per user	0	4	0	0
+- Can search and sort user accounts by using ID#, volume, type	0	4	0	0

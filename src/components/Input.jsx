@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 const Input = ({label, value, placeholder, setValue, changed}) =>{
   return (
     <div className="field">
