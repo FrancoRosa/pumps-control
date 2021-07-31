@@ -29,6 +29,8 @@ pumps_config = [
 if rpi:
   pumps = [LED(4), LED(17), LED(27), LED(22)]
 
+MAX_PULSES = 1e3
+MAX_TIME = 60*60
 
 # This manages sensor pulses 
 def volume_counter():
@@ -68,8 +70,8 @@ def send_status_debug():
           pump['time_count'] = 0
           socketio.send(json.dumps({
           'id': pump['id'],
-          'pulses_count':pump['pulses_count'],
-          'time_count':pump['time_count'],
+          'pulses_count': pump['pulses_count'],
+          'time_count': round(pump['time_count'],1),
           'on':pump['on'],
         }), broadcast=True)
       
@@ -81,8 +83,8 @@ def send_status_debug():
       if pump['on']:
         socketio.send(json.dumps({
           'id': pump['id'],
-          'pulses_count':pump['pulses_count'],
-          'time_count':pump['time_count'],
+          'pulses_count': pump['pulses_count'],
+          'time_count': round(pump['time_count'],1),
           'on':pump['on'],
         }), broadcast=True)
     sleep(1)        
@@ -93,6 +95,7 @@ Thread(target=volume_counter if rpi else send_status_debug, args=[]).start()
 def time_counter():
   global pumps_config, pumps
   time_step = 0.1
+    
   while True:
     if rpi:
       for i, pump in enumerate(pumps):
@@ -101,22 +104,32 @@ def time_counter():
     for pump in pumps_config:
       if pump['on']:
         pump['time_count'] += time_step
+
         if pump['time_count'] >= pump['timeout']:
+          pump['time_count'] = round(pump['time_count'],1)
           print('... time stopping pump', pump['id'])
           pump['on'] = False
           socketio.send(json.dumps(pump), broadcast=True)
+
     sleep(time_step)
 
 Thread(target=time_counter, args=[]).start()
 
-def start_pump(id, pulses, timeout):
+def start_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
   global pumps_config
   pump = pumps_config[id]
   pump['pulses'] = pulses
   pump['timeout'] = timeout
   pump['pulses_count'] = 0
-  pump['time_count'] = 0.1
+  pump['time_count'] = 0
   pump['on'] = True
+  pumps_config[id] = pump
+  socketio.send(json.dumps(pump), broadcast=True)
+
+def stop_pump(id):
+  global pumps_config
+  pump = pumps_config[id]
+  pump['on'] = False
   pumps_config[id] = pump
   socketio.send(json.dumps(pump), broadcast=True)
 
@@ -124,13 +137,35 @@ def start_pump(id, pulses, timeout):
 def index():
   return "... control server running on port %s"%port
 
-@app.route('/api/start', methods=['post'])
-def start():
+@app.route('/api/startcontrolled', methods=['post'])
+def startcontrolled():
   config = request.get_json()
   id = int(config['id'])
   pulses = int(config['pulses'])
   timeout =  int(config['timeout'])
   start_pump(id, pulses, timeout)
+  response = make_response(jsonify({
+    "id": id,
+    'total_pulses': pumps_config[id]['total_pulses']
+  }), 200)
+  response.headers["Content-Type"] = "application/json"
+  return response
+
+@app.route('/api/start/<id>', methods=['post'])
+def start(id):
+  id = int(id)
+  start_pump(id)
+  response = make_response(jsonify({
+    "id": id,
+    'total_pulses': pumps_config[id]['total_pulses']
+  }), 200)
+  response.headers["Content-Type"] = "application/json"
+  return response
+
+@app.route('/api/stop/<id>', methods=['post'])
+def stop(id):
+  id = int(id)
+  stop_pump(id)
   response = make_response(jsonify({
     "id": id,
     'total_pulses': pumps_config[id]['total_pulses']
