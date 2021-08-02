@@ -22,7 +22,7 @@ const App = () => {
     const updatePumps = msg => {
       const pump = JSON.parse(msg);
       pumpsInitialState[pump.id] =  {...pumpsInitialState[pump.id], ...pump}
-      setPumps([... pumpsInitialState])
+      setPumps([...pumpsInitialState])
     }
     
     socket.on('message', msg => updatePumps(msg))
