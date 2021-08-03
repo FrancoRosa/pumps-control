@@ -19,7 +19,7 @@ export const startPump = async (pump) => {
 }
 
 export const stopPump = async (pump) => {
-  console.log('... starting pump');
+  console.log('... stop pump');
   const {id} = pump
   const url = `http://${host}:9999/api/stop/${id}`;
   const response = await axios.post(url)
