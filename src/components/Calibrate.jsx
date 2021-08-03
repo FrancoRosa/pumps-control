@@ -1,4 +1,5 @@
 import CardManual from "./CardManual";
+import CalibInstructions from "./CalibInstructions.jsx";
 import { useContext } from 'react';
 import { PumpsContext } from '../js/PumpsContext';
 
@@ -11,11 +12,14 @@ const Calibrate = () => {
   }
 
   return (
-    <div className="columns">
-      {pumps.map(pump => (
-        <CardManual key={pump.id} pump={pump}/>
-      ))}
-    </div>
+    <>
+      <CalibInstructions />
+      <div className="columns">
+        {pumps.map(pump => (
+          <CardManual key={pump.id} pump={pump}/>
+        ))}
+      </div>
+    </>
   )
 };
 

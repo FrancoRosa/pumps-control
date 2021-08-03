@@ -1,11 +1,8 @@
 import { useState, useContext, useEffect } from "react";
-import { PumpsContext } from "../js/PumpsContext";
 import { getTimestamp } from "../js/helpers";
 import { startPump, stopPump } from "../api/api";
 
 const CardManual = ({ pump }) => {
-  const { pumps, setPumps } = useContext(PumpsContext)
-  const { id } = pump
   const [seconds, setSeconds] = useState(0)
   const [running, setRunning] = useState(false)
   const [start, setStart] = useState(getTimestamp())
