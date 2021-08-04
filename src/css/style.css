@@ -10,6 +10,13 @@
   flex-direction: column;
 }
 
+.is-justify-content-space-between	{
+  justify-content: space-between;
+}
+
+.is-justify-content-space-around	{
+  justify-content: space-around;
+}
 .full-width {
   width: 100vw;
 }

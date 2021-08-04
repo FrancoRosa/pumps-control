@@ -1,13 +1,19 @@
 import { useState, useContext, useEffect } from "react";
 import { getTimestamp } from "../js/helpers";
 import { startPump, stopPump } from "../api/api";
+import { useLocalStorage } from '../js/useLocalStorage';
+
 
 const CardManual = ({ pump }) => {
   const [seconds, setSeconds] = useState(0)
   const [running, setRunning] = useState(false)
   const [start, setStart] = useState(getTimestamp())
   const [end, setEnd] = useState(getTimestamp())
-
+  const [pulsesPerUnit, setPulsesPerUnit] = useLocalStorage('pulsesPerUnit',1)
+  const [fillTimeout, setFillTimeout] = useLocalStorage('fillTimeout',10)
+  const [calibrationVol, setCalibrationVol] = useLocalStorage("calibrationVol", 8);
+  const [timeoutTolerance, setTimeoutTolerance] = useLocalStorage('timeoutTolerance', '5')
+  
   useEffect(() => {
     const timer = setInterval(() => {
       setEnd(getTimestamp())
@@ -17,8 +23,14 @@ const CardManual = ({ pump }) => {
   })
 
   useEffect(() => {
-    if (running) setSeconds(end-start)
+    if (running) {
+      let elapsed = end-start  
+      setSeconds(elapsed)
+      setFillTimeout((elapsed*(1 + timeoutTolerance/100)).toFixed(2));
+      setPulsesPerUnit(pump.pulses_count/parseInt(calibrationVol))
+    }
   }, [end])
+
 
   const startCount = () => {
     setStart(getTimestamp())
@@ -34,23 +46,42 @@ const CardManual = ({ pump }) => {
 
   return (
     <div className="column">
-      <div className="card m-4">
+      <div className="card m-2">
         <header className="card-header">
           <p className="card-header-title title is-3 is-centered">
             {pump.name}
           </p>
         </header>
-        <p className="has-text-link heading has-text-centered mt-4">Stopwatch</p>
-        <p className="title is-3 success has-text-centered">{seconds.toFixed(1)}</p>
-        <p className="has-text-link heading has-text-centered mt-4">Pulses</p>
-        <p className="title is-3 success has-text-centered">{pump.pulses_count}</p>
+        <div className="is-flex is-justify-content-space-around">
+          <div>
+            <p className="has-text-link heading has-text-centered mt-4">Stopwatch</p>
+            <p className="title is-3 success has-text-centered">{seconds.toFixed(1)}</p>
+          </div>
+          <div>
+            <p className="has-text-link heading has-text-centered mt-4">Pulses</p>
+            <p className="title is-3 success has-text-centered">{pump.pulses_count}</p>
+          </div>
+        </div>
         <div className="card-content is-flex is-justify-content-center m-0 p-0">
           <button
-            className="button m-2 is-medium"
+            className="button mb-2 mt-2 pt-0 is-medium"
             onClick={running ? stopCount : startCount}
           >
             {running ? 'Stop' : 'Start'}
           </button>
+        </div>
+        <div className="card-footer is-flex-direction-column">
+          <p className="heading has-text-link has-text-centered mt-3">Results</p>
+          <div className="is-flex is-justify-content-space-around mb-2">
+          <div>
+            <p className="has-text-link heading has-text-centered mt-4">Pulses/Volume</p>
+            <p className="title is-3 success has-text-centered">{pulsesPerUnit}</p>
+          </div>
+          <div>
+            <p className="has-text-link heading has-text-centered mt-4">Pump timeout</p>
+            <p className="title is-3 success has-text-centered">{fillTimeout}</p>
+          </div>
+        </div>
         </div>
       </div>
     </div>
