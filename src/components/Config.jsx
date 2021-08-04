@@ -1,9 +1,9 @@
 import { faPlus, faVial } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import CardConfig from "./CardConfig";
 import { useContext } from 'react';
 import { PumpsContext } from '../js/PumpsContext';
+import RecipeConfig from './RecipeConfig';
 
 const Config = () => {
           
@@ -27,6 +27,8 @@ const Config = () => {
       ]
     }
   ]
+
+  const selected = 0
 
   return (
     <div className="columns">
@@ -57,9 +59,7 @@ const Config = () => {
       </div>
       <div className="column">
         <div className="columns">
-          {pumps.map(pump => (
-            <CardConfig key={pump.id} pump={pump}/>
-            ))}
+          <RecipeConfig recipe={recipes[0]}/>
         </div>
       </div>
     </div>
