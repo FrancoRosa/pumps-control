@@ -6,17 +6,21 @@ import CalibModal from './CalibModal';
 
 const CalibInstructions = () => {
   const [calibrationVol, setCalibrationVol] = useLocalStorage("calibrationVol", 8);
+  const [timeoutTolerance, setTimeoutTolerance] = useLocalStorage('timeoutTolerance', '5')
+  
   const [showModal, setShowModal] = useState(false);
   
   useEffect(()=> {
-    const savedValue = window.localStorage.getItem("calibrationVol") 
-    setCalibrationVol(savedValue.replace('"', '').replace('"', ''))
+    const savedVolValue = window.localStorage.getItem("calibrationVol") 
+    const savedTimeValue = window.localStorage.getItem("timeoutTolerance") 
+    setCalibrationVol(savedVolValue.replace('"', '').replace('"', ''))
+    setTimeoutTolerance(savedTimeValue.replace('"', '').replace('"', ''))
   }, [showModal])
 
   return (
     <div class="card m-4 pl-4 pr-4">
       <header class="card-header">
-        <p class="card-header-title is-centered">
+        <p class="card-header-title is-centered heading has-text-link">
           Calibration Instructions
         </p>
         <FontAwesomeIcon icon={faCog} className="m-4" onClick={() => setShowModal(true)}/>
@@ -26,7 +30,9 @@ const CalibInstructions = () => {
           <p>
             The calibration procedure measures the time and pulses required to dispense a defined quantity of liquid.
             <br />
-            In order to accurately calculate the Pulses-per-volume and timeouts, start and stop the time to fill the following volume.
+            The current timeout tolerance is {timeoutTolerance}%
+            <br />
+            To accurately calculate the pulses-per-volume and timeouts, measure the time to fill the following volume:
           </p>
           <p className="is-centered subtitle is-3">
             {calibrationVol} ounces

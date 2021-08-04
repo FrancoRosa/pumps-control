@@ -9,7 +9,7 @@ const CalibConstants = () => {
   return (
     <div className="card">
       <header className="card-header">
-        <p className="card-header-title is-centered">
+        <p className="card-header-title is-centered is-3 title">
           Set calibration constants
         </p>
       </header>
@@ -19,22 +19,22 @@ const CalibConstants = () => {
           <label className="label">Calibration Volume (Oz)</label>
           <div className="control">
             <input 
-              className="input" type="number" 
+              className="input is-medium" type="number" 
               min={1} step={1}
               value={calibrationVol}
               onChange={e => setCalibrationVol(e.target.value)} 
-              placeholder="Text input" />
+              placeholder="Bucket volume to be used on calibration." />
           </div>
         </div>
         <div className="field">
           <label className="label">Timeout tolerance (%)</label>
           <div className="control">
             <input 
-              className="input" type="number" 
+              className="input is-medium" type="number" 
               min={1} step={1}
               value={timeoutTolerance}
               onChange={e => setTimeoutTolerance(e.target.value)} 
-              placeholder="Text input" />
+              placeholder="Time tolerance before turning the pump off." />
           </div>
         </div>
         </div>
