@@ -1,7 +1,7 @@
 import { faPlus, faVial } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { PumpsContext } from '../js/PumpsContext';
 import RecipeConfig from './RecipeConfig';
 
@@ -9,6 +9,16 @@ const Config = () => {
           
   const {pumps, setPumps} = useContext(PumpsContext)
   
+  const newRecipe = {
+    name: 'New recipe',
+    pumps: [
+      { id: 0, volume: 0}, { id: 1, volume: 0}, { id: 2, volume: 0}, { id: 3, volume: 0},
+    ]
+  }
+
+  const [recipe, setRecipe] = useState(newRecipe)
+  const [name, setName] = useState(newRecipe.name)
+
   const handleChange = () => {
     console.log('...')
   }
@@ -57,10 +67,11 @@ const Config = () => {
           </li>
         </ul>
       </div>
-      <div className="column">
-        <div className="columns">
-          <RecipeConfig recipe={recipes[0]}/>
-        </div>
+      <div className="column p-4">
+        <RecipeConfig 
+          recipe={recipe} setRecipe={setRecipe}
+          name={name} setName={setName}
+        />
       </div>
     </div>
   )
