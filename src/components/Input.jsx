@@ -1,4 +1,4 @@
-const Input = ({label, value, placeholder, setValue, changed}) =>{
+const Input = ({label, value, placeholder, setValue, changed, id}) =>{
   return (
     <div className="field">
       <label className="label">{label}</label>
@@ -8,7 +8,7 @@ const Input = ({label, value, placeholder, setValue, changed}) =>{
           type="number"
           min="0"
           placeholder={placeholder}
-          onChange={e => setValue(e.target.value)}
+          onChange={e => setValue(e.target.value, id)}
           value={value}/>
       </div>
     </div>
