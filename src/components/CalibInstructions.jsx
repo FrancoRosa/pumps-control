@@ -18,15 +18,15 @@ const CalibInstructions = () => {
   }, [showModal])
 
   return (
-    <div class="card m-4 pl-4 pr-4">
-      <header class="card-header">
-        <p class="card-header-title is-centered heading has-text-link">
+    <div className="card m-4 pl-4 pr-4">
+      <header className="card-header">
+        <p className="card-header-title is-centered heading has-text-link">
           Calibration Instructions
         </p>
         <FontAwesomeIcon icon={faCog} className="m-4" onClick={() => setShowModal(true)}/>
       </header>
-      <div class="card-content">
-        <div class="content has-text-centered">
+      <div className="card-content">
+        <div className="content has-text-centered">
           <p>
             The calibration procedure measures the time and pulses required to dispense a defined quantity of liquid.
             <br />

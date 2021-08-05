@@ -38,7 +38,7 @@ const RecipeConfig = ({
         </div>
       </div>
       <footer className="card-footer">
-        {recipe.name == 'New recipe'?
+        {recipe.name === 'New recipe'?
           <a className="card-footer-item" onClick={saveRecipe}>Save</a>
          :
           <>

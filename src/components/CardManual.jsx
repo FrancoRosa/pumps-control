@@ -3,14 +3,13 @@ import { getTimestamp } from "../js/helpers";
 import { startPump, stopPump } from "../api/api";
 import { useLocalStorage } from '../js/useLocalStorage';
 
-
-const CardManual = ({ pump }) => {
+const CardManual = ({ pump, calibrations, setCalibrations }) => {
   const [seconds, setSeconds] = useState(0)
   const [running, setRunning] = useState(false)
   const [start, setStart] = useState(getTimestamp())
   const [end, setEnd] = useState(getTimestamp())
-  const [pulsesPerUnit, setPulsesPerUnit] = useLocalStorage('pulsesPerUnit',1)
-  const [fillTimeout, setFillTimeout] = useLocalStorage('fillTimeout',10)
+  const [pulsesPerUnit, setPulsesPerUnit] = useState(calibrations[pump.id].pulses_per_volume)
+  const [fillTimeout, setFillTimeout] = useState(calibrations[pump.id].timeout)
   const [calibrationVol, setCalibrationVol] = useLocalStorage("calibrationVol", 8);
   const [timeoutTolerance, setTimeoutTolerance] = useLocalStorage('timeoutTolerance', '5')
   
@@ -30,6 +29,15 @@ const CardManual = ({ pump }) => {
       setPulsesPerUnit(pump.pulses_count/parseInt(calibrationVol))
     }
   }, [end])
+
+  useEffect(() => {
+    if (!running) {
+      const newCalibrations = [...calibrations]
+      newCalibrations[pump.id].pulses_per_volume = pulsesPerUnit
+      newCalibrations[pump.id].timeout = fillTimeout
+      setCalibrations(newCalibrations)
+    }
+  }, [running])
 
 
   const startCount = () => {

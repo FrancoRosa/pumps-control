@@ -55,7 +55,7 @@ const Config = () => {
 
   const updateRecipe = () => {
     const newRecipes = recipes.map(savedRecipe => {
-      if(savedRecipe.name == name) {
+      if(savedRecipe.name === name) {
         return {...recipe, name}
       } else {
         return savedRecipe
@@ -84,8 +84,8 @@ const Config = () => {
         <ul className="menu-list">
           {recipes.map(recipe => (
             <li>
-              <a onClick={() => selectRecipe(recipe)} className={name==recipe.name ? 'is-active':''}>
-                <span className={name==recipe.name ? 'has-text-white' : 'has-text-link'}>
+              <a onClick={() => selectRecipe(recipe)} className={name === recipe.name ? 'is-active':''}>
+                <span className={name === recipe.name ? 'has-text-white' : 'has-text-link'}>
                   <FontAwesomeIcon icon={faVial} />
                 </span>
                 <span className="ml-2" >{recipe.name}</span>
@@ -93,8 +93,8 @@ const Config = () => {
             </li>
           ))}
           <li>
-            <a onClick={newRecipe} className={'New recipe'==recipe.name ? 'is-active':''}>
-              <span className={'New recipe'==recipe.name ? 'has-text-white' : 'has-text-link'}>
+            <a onClick={newRecipe} className={'New recipe' === recipe.name ? 'is-active':''}>
+              <span className={'New recipe' === recipe.name ? 'has-text-white' : 'has-text-link'}>
                 <FontAwesomeIcon icon={faPlus} />
               </span>
               <span className="ml-2">Add recipe</span>
