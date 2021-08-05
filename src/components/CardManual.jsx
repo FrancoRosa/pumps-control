@@ -25,7 +25,7 @@ const CardManual = ({ pump, calibrations, setCalibrations }) => {
     if (running) {
       let elapsed = end-start  
       setSeconds(elapsed)
-      setFillTimeout((elapsed*(1 + timeoutTolerance/100)).toFixed(2));
+      setFillTimeout(((elapsed/parseInt(calibrationVol))*(1 + timeoutTolerance/100)).toFixed(2));
       setPulsesPerUnit(pump.pulses_count/parseInt(calibrationVol))
     }
   }, [end])
