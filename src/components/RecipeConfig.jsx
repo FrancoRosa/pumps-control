@@ -38,11 +38,11 @@ const RecipeConfig = ({
                 <div className="card-footer is-justify-content-space-around">
                   <div className="has-text-centered m-2">
                     <p className="heading has-text-link">Pulses</p>
-                    <p>{calibrations[pump.id].pulses_per_volume*recipe.pumps[pump.id].volume}</p>
+                    <p>{(calibrations[pump.id].pulses_per_volume*recipe.pumps[pump.id].volume).toFixed(1)}</p>
                   </div>
                   <div className="has-text-centered m-2">
                     <p className="heading has-text-link">Timeout</p>
-                    <p>{calibrations[pump.id].timeout*recipe.pumps[pump.id].volume}</p>
+                    <p>{(calibrations[pump.id].timeout*recipe.pumps[pump.id].volume).toFixed(1)}</p>
                   </div>
                 </div>
               </div>

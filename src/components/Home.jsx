@@ -1,8 +1,8 @@
-import { useContext, useEffect,  } from 'react';
-import { startControlledPump, startPump, stopPump } from '../api/api';
+import { useContext } from 'react';
+import { startControlledPump,  stopPump } from '../api/api';
 import { PumpsContext } from '../js/PumpsContext';
 import { useLocalStorage } from '../js/useLocalStorage';
-import { faPlus, faVial, faHandPaper } from '@fortawesome/free-solid-svg-icons';
+import { faVial, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Home = () => {
@@ -47,7 +47,7 @@ const Home = () => {
     })
     setPumps(newPumps)
     newPumps.forEach(pump => {
-      startPump(pump)
+      startControlledPump(pump)
     });
   }
 
@@ -60,9 +60,10 @@ const Home = () => {
   return (
     <>
       <h1 className="title is-2 has-text-centered">DECON SEVEN</h1>
-      <div className="columns">
+      <div className="container ">
+        <div className="columns">
           {recipes.map(recipe => (
-            <div className="column is-one-quarter is-flex is-flex-centered">
+            <div className="column is-flex is-flex-centered">
               <div className="card is-flex-direction-column is-flex-centered home-card">
                 <a onClick={() => startRecipe(recipe)}>
                   <p className="has-text-success title is-2 is-large m-4 has-text-centered">{recipe.name}</p>
@@ -83,6 +84,7 @@ const Home = () => {
             </a>
           </div>
         </div>
+      </div>
       </div>
     </>
   )
