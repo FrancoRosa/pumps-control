@@ -4,6 +4,7 @@ import { PumpsContext } from '../js/PumpsContext';
 import { useLocalStorage } from '../js/useLocalStorage';
 import { faVial, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import logo from '../assets/logo.png'
 
 const Home = () => {
 
@@ -59,15 +60,17 @@ const Home = () => {
 
   return (
     <>
-      <h1 className="title is-2 has-text-centered">DECON SEVEN</h1>
+      <div className="is-flex is-flex-centered">
+        <img src={logo} className='m-4 logo'/>
+      </div>
       <div className="container ">
         <div className="columns">
           {recipes.map(recipe => (
             <div className="column is-flex is-flex-centered">
               <div className="card is-flex-direction-column is-flex-centered home-card">
                 <a onClick={() => startRecipe(recipe)}>
-                  <p className="has-text-success title is-2 is-large m-4 has-text-centered">{recipe.name}</p>
-                  <div className="title is-1 has-text-centered m-4 has-text-success">
+                  <p className="has-text-success title is-4 m-2 has-text-centered">{recipe.name}</p>
+                  <div className="title is-1 has-text-centered m-2 has-text-success">
                     <FontAwesomeIcon icon={faVial} />
                   </div>
                 </a>
@@ -77,7 +80,7 @@ const Home = () => {
         <div className="column is-one-quarter is-flex is-flex-centered">
           <div className="card is-flex-direction-column is-flex-centered">
             <a onClick={stopRecipe}>
-              <p className="has-text-danger title is-2 is-large m-4">Stop</p>
+              <p className="has-text-danger title is-4 m-4 has-text-centered">Stop</p>
               <div className="title is-1 has-text-centered m-4 has-text-danger">
                 <FontAwesomeIcon icon={faHandPaper} />
               </div>

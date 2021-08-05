@@ -18,7 +18,7 @@ const CalibInstructions = () => {
   }, [showModal])
 
   return (
-    <div className="card m-4 pl-4 pr-4">
+    <div className="card m-2 pl-2 pr-2">
       <header className="card-header">
         <p className="card-header-title is-centered heading has-text-link">
           Calibration Instructions
@@ -30,13 +30,11 @@ const CalibInstructions = () => {
           <p>
             The calibration procedure measures the time and pulses required to dispense a defined quantity of liquid.
             <br />
-            The current timeout tolerance is {timeoutTolerance}%
+            The current timeout tolerance is <strong>{timeoutTolerance}%</strong>
             <br />
-            To accurately calculate the pulses-per-volume and timeouts, measure the time to fill the following volume:
+            To accurately calculate the pulses-per-volume and timeouts, measure the time to fill <strong>{calibrationVol}</strong> Oz:
           </p>
-          <p className="is-centered subtitle is-3">
-            {calibrationVol} ounces
-          </p>
+         
         </div>
       </div>
       <CalibModal showModal={showModal} setShowModal={setShowModal}/>

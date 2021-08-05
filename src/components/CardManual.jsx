@@ -54,20 +54,20 @@ const CardManual = ({ pump, calibrations, setCalibrations }) => {
 
   return (
     <div className="column">
-      <div className="card m-2">
+      <div className="card">
         <header className="card-header">
-          <p className="card-header-title title is-3 is-centered">
+          <p className="card-header-title title is-5 is-centered">
             {pump.name}
           </p>
         </header>
         <div className="is-flex is-justify-content-space-around">
           <div>
-            <p className="has-text-link heading has-text-centered mt-4">Stopwatch</p>
-            <p className="title is-3 success has-text-centered">{seconds.toFixed(1)}</p>
+            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Stopwatch</p>
+            <p className="title is-5 success has-text-centered">{seconds.toFixed(1)}</p>
           </div>
           <div>
-            <p className="has-text-link heading has-text-centered mt-4">Pulses</p>
-            <p className="title is-3 success has-text-centered">{pump.pulses_count}</p>
+            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Pulses</p>
+            <p className="title is-5 success has-text-centered">{pump.pulses_count}</p>
           </div>
         </div>
         <div className="card-content is-flex is-justify-content-center m-0 p-0">
@@ -79,14 +79,14 @@ const CardManual = ({ pump, calibrations, setCalibrations }) => {
           </button>
         </div>
         <div className="card-footer is-flex-direction-column">
-          <p className="heading has-text-link has-text-centered mt-3">Results</p>
+          <p className="heading has-text-link has-text-centered mt-3 is-size-8">Results</p>
           <div className="is-flex is-justify-content-space-around mb-2">
           <div>
-            <p className="has-text-link heading has-text-centered mt-4">Pulses/Volume</p>
+            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Pulses/Volume</p>
             <p className="title is-3 success has-text-centered">{pulsesPerUnit}</p>
           </div>
           <div>
-            <p className="has-text-link heading has-text-centered mt-4">Pump timeout</p>
+            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Pump timeout</p>
             <p className="title is-3 success has-text-centered">{fillTimeout}</p>
           </div>
         </div>
