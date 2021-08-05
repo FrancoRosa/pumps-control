@@ -1,11 +1,14 @@
-import Input from "./Input";
+import { useLocalStorage } from "../js/useLocalStorage";
+import InputVolume from "./InputVolume";
 
 const RecipeConfig = ({ 
   recipe, setRecipe,
   name, setName,
-  saveRecipe, deleteRecipe, updateRecipe 
+  saveRecipe, deleteRecipe, updateRecipe,
+  calibrations 
 }) => {
   
+ 
   const setPumpVolume = (e, id) => {
     const newVolume = { ...recipe }
     newVolume.pumps[id].volume = e
@@ -27,11 +30,21 @@ const RecipeConfig = ({
           <div className="columns">
             {recipe.pumps.map(pump => (
               <div className="column">
-                <Input label={`Pump ${pump.id}`} 
+                <InputVolume label={`Pump ${pump.id}`} 
                   value={pump.volume} placeholder="Volume to supply"
                   changed={false} 
                   id={pump.id} 
                   setValue={setPumpVolume}/>
+                <div className="card-footer is-justify-content-space-around">
+                  <div className="has-text-centered m-2">
+                    <p className="heading has-text-link">Pulses</p>
+                    <p>{calibrations[pump.id].pulses_per_volume*recipe.pumps[pump.id].volume}</p>
+                  </div>
+                  <div className="has-text-centered m-2">
+                    <p className="heading has-text-link">Timeout</p>
+                    <p>{calibrations[pump.id].timeout*recipe.pumps[pump.id].volume}</p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

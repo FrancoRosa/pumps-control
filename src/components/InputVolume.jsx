@@ -1,4 +1,4 @@
-const Input = ({label, value, placeholder, setValue, changed, id}) =>{
+const InputVolume = ({label, value, placeholder, setValue, changed, id}) =>{
   return (
     <div className="field">
       <label className="label">{label}</label>
@@ -15,4 +15,4 @@ const Input = ({label, value, placeholder, setValue, changed, id}) =>{
   )
 }
 
-export default Input
+export default InputVolume

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { useContext, useEffect, useState } from 'react';
 import { PumpsContext } from '../js/PumpsContext';
+import { useLocalStorage } from '../js/useLocalStorage';
 import RecipeConfig from './RecipeConfig';
 
 const Config = () => {
@@ -31,9 +32,17 @@ const Config = () => {
     }
   ]
 
+  const calibrationsInit = [
+    { id: 0, pulses_per_volume: 6, timeout: 8 },
+    { id: 1, pulses_per_volume: 6, timeout: 8 },
+    { id: 2, pulses_per_volume: 7, timeout: 8 },
+    { id: 3, pulses_per_volume: 7, timeout: 8 },
+  ]
+
   const [recipes, setRecipes] = useState(savedRecipes)
   const [recipe, setRecipe] = useState(recipes[0])
   const [name, setName] = useState(recipes[0].name)
+  const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
 
   const saveRecipe = () => {
     const savedNames = recipes.map(recipe => recipe.name)
@@ -109,6 +118,7 @@ const Config = () => {
           saveRecipe={saveRecipe}
           deleteRecipe={deleteRecipe}
           updateRecipe={updateRecipe}
+          calibrations={calibrations}
         />
       </div>
     </div>
