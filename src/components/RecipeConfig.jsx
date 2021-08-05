@@ -1,16 +1,20 @@
 import Input from "./Input";
 
-const RecipeConfig = ({ recipe, setRecipe, name, setName }) => {
+const RecipeConfig = ({ 
+  recipe, setRecipe,
+  name, setName,
+  saveRecipe, deleteRecipe, updateRecipe 
+}) => {
   
   const setPumpVolume = (e, id) => {
-    const newVolume = {...recipe}
+    const newVolume = { ...recipe }
     newVolume.pumps[id].volume = e
     setRecipe(newVolume)
   }
   
   return (
     <div className="card">
-      <header class="card-header p-2">
+      <header className="card-header p-2">
         <input 
           type="text" 
           value={name} 
@@ -18,8 +22,8 @@ const RecipeConfig = ({ recipe, setRecipe, name, setName }) => {
           className="input no-frame-input title"
         />
       </header>
-      <div class="card-content">
-        <div class="content">
+      <div className="card-content">
+        <div className="content">
           <div className="columns">
             {recipe.pumps.map(pump => (
               <div className="column">
@@ -33,9 +37,15 @@ const RecipeConfig = ({ recipe, setRecipe, name, setName }) => {
           </div>
         </div>
       </div>
-      <footer class="card-footer">
-        <a class="card-footer-item">Save</a>
-        <a class="card-footer-item">Delete</a>
+      <footer className="card-footer">
+        {recipe.name == 'New recipe'?
+          <a className="card-footer-item" onClick={saveRecipe}>Save</a>
+         :
+          <>
+          <a className="card-footer-item" onClick={updateRecipe}>Update</a>
+          <a className="card-footer-item" onClick={deleteRecipe}>Delete</a>
+          </>
+        }
       </footer>
     </div>
   )
