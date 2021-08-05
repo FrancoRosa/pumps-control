@@ -6,8 +6,17 @@
   align-items: center;
 }
 
+.is-flex-centered {
+  justify-content: center;
+  align-items: center;
+} 
+
 .is-flex-direction-column {
   flex-direction: column;
+}
+
+.is-flex-direction-row {
+  flex-direction: row
 }
 
 .is-justify-content-space-between	{
@@ -20,6 +29,10 @@
 
 .full-width {
   width: 100vw;
+}
+
+.home-card {
+  min-width: 14em;
 }
 
 .no-frame-input {

@@ -39,7 +39,7 @@ const Config = () => {
     { id: 3, pulses_per_volume: 7, timeout: 8 },
   ]
 
-  const [recipes, setRecipes] = useState(savedRecipes)
+  const [recipes, setRecipes] = useLocalStorage('recipes', savedRecipes)
   const [recipe, setRecipe] = useState(recipes[0])
   const [name, setName] = useState(recipes[0].name)
   const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
