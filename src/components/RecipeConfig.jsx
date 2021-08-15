@@ -1,4 +1,5 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
+import { setSavedStorage } from "../js/helpers";
 
 const RecipeConfig = () => {
   const recipes = useStoreState(state => state.recipes)
@@ -28,7 +29,11 @@ const RecipeConfig = () => {
         </div>
       </div>
       <div className="card-footer">
-        <button className="button card-footer-item">Save</button>
+        <button
+          onClick={() => setSavedStorage('recipes',recipes)}
+          className="button card-footer-item">
+            Save
+        </button>
       </div>
     </div>
   )

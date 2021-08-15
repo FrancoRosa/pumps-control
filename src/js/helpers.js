@@ -5,3 +5,7 @@ export const getTimestamp = () => {
 export const capitalize = text => {
   return text.replace(/^\w/, (c) => c.toUpperCase());
 }
+
+export const setSavedStorage = (key, obj) => {
+  window.localStorage.setItem(key, JSON.stringify(obj))
+}

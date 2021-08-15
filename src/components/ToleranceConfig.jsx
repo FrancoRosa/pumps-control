@@ -1,4 +1,5 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
+import { setSavedStorage } from "../js/helpers";
 import { useLocalStorage } from "../js/useLocalStorage";
 import InputVolume from "./InputVolume";
 
@@ -24,7 +25,11 @@ const ToleranceConfig = () => {
         </div>
       </div>
       <div className="card-footer">
-        <button className="button card-footer-item">Save</button>
+        <button 
+          onClick={() => setSavedStorage('timeTolerance',timeTolerance)}
+          className="button card-footer-item">
+            Save
+        </button>
       </div>
     </div>
   )
