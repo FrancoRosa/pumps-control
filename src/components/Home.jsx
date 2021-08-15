@@ -1,50 +1,36 @@
-import { useContext } from 'react';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 import { startControlledPump,  stopPump } from '../api/api';
-import { PumpsContext } from '../js/PumpsContext';
 import { useLocalStorage } from '../js/useLocalStorage';
 import { faVial, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../assets/logo.png'
 
 const Home = () => {
-
+  const pumpsState = useStoreState(state => state.pumpsState)
+  const setPumpsState = useStoreActions(actions => actions.setPumpsState)
   const handleClick = pump => {
     startControlledPump(pump).then(resp => console.log(resp))
   }
 
-  const {pumps, setPumps} = useContext(PumpsContext)
- 
-  const calibrationsInit = [
-    { id: 0, pulses_per_volume: 6, timeout: 8 },
-    { id: 1, pulses_per_volume: 6, timeout: 8 },
-    { id: 2, pulses_per_volume: 7, timeout: 8 },
-    { id: 3, pulses_per_volume: 7, timeout: 8 },
-  ]
-  
-  const recipes = [
-    {name: 'Recipe 1'},
-    {name: 'Recipe 2'},
-    {name: 'Recipe 3'}
-  ]
-
-  const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
+  const recipes = useStoreState(state => state.recipes)
+  const calibrations = useStoreState(state => state.calibrations)
 
 
   const startRecipe = recipe => {
     // Update pumps time and pulses (calculating values)
-    const newPumps = [...pumps]
+    const newPumps = [...pumpsState]
     newPumps.forEach((pump, index) => {
       pump.timeout = calibrations[index].timeout*recipe.pumps[index].volume
       pump.pulses = calibrations[index].pulses_per_volume*recipe.pumps[index].volume
     })
-    setPumps(newPumps)
+    setPumpsState(newPumps)
     newPumps.forEach(pump => {
       startControlledPump(pump)
     });
   }
 
   const stopRecipe = () => {
-    pumps.forEach(pump => {
+    pumpsState.forEach(pump => {
       stopPump(pump)
     });
   }

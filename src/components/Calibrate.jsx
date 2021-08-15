@@ -1,10 +1,10 @@
 import CardManual from "./CardManual";
 import CalibInstructions from "./CalibInstructions.jsx";
-import { useContext } from 'react';
-import { PumpsContext } from '../js/PumpsContext';
 import { useLocalStorage } from "../js/useLocalStorage";
+import { useStore, useStoreState } from "easy-peasy";
 
 const Calibrate = () => {
+  const pumps = useStoreState(state => state.pumps)
   const calibrationsInit = [
     { id: 0, pulses_per_volume: 6, timeout: 8 },
     { id: 1, pulses_per_volume: 6, timeout: 8 },
@@ -12,7 +12,6 @@ const Calibrate = () => {
     { id: 3, pulses_per_volume: 7, timeout: 8 },
   ]
 
-  const {pumps, setPumps} = useContext(PumpsContext)
   const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
   
   return (

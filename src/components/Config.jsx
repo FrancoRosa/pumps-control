@@ -1,14 +1,13 @@
 import { faPlus, faVial } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { useContext, useEffect, useState } from 'react';
-import { PumpsContext } from '../js/PumpsContext';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useLocalStorage } from '../js/useLocalStorage';
+import ConfigNavigation from './ConfigNavigation';
 import RecipeConfig from './RecipeConfig';
 
 const Config = () => {
-          
-  const {pumps, setPumps} = useContext(PumpsContext)
   
   const recipeInit = {
     name: 'New recipe',
@@ -73,44 +72,9 @@ const Config = () => {
     setRecipes(newRecipes)
   }  
 
-
-  const selectRecipe = (recipe) => {
-    setName(recipe.name)
-    setRecipe(recipe)
-  }
-
-  const newRecipe = () => {
-    setName(recipeInit.name)
-    setRecipe(recipeInit)
-  }
-
   return (
     <div className="columns">
-      <div className="menu column is-one-fifth">
-        <p className="menu-label has-text-link">
-          <a>Recipes</a>
-        </p>
-        <ul className="menu-list">
-          {recipes.map(recipe => (
-            <li>
-              <a onClick={() => selectRecipe(recipe)} className={name === recipe.name ? 'is-active':''}>
-                <span className={name === recipe.name ? 'has-text-white' : 'has-text-link'}>
-                  <FontAwesomeIcon icon={faVial} />
-                </span>
-                <span className="ml-2" >{recipe.name}</span>
-              </a>
-            </li>
-          ))}
-          <li>
-            <a onClick={newRecipe} className={'New recipe' === recipe.name ? 'is-active':''}>
-              <span className={'New recipe' === recipe.name ? 'has-text-white' : 'has-text-link'}>
-                <FontAwesomeIcon icon={faPlus} />
-              </span>
-              <span className="ml-2">Add recipe</span>
-            </a>
-          </li>
-        </ul>
-      </div>
+      <ConfigNavigation/>
       <div className="column p-4">
         <RecipeConfig 
           recipe={recipe} setRecipe={setRecipe}
@@ -123,6 +87,7 @@ const Config = () => {
       </div>
     </div>
   )
+  
 };
 
 export default Config;
