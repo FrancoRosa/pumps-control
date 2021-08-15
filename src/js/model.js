@@ -14,6 +14,7 @@ export default {
     {id: 2, name: 'Pump 3'},
     {id: 3, name: 'Pump 4'},
   ],
+  setPumps: action((state, pumps) =>  { state.pumps = [...pumps] }),
   
   calibration: [
     {
@@ -53,5 +54,7 @@ export default {
   ],
 
   setPumpsState: action((state, pumpsState) =>  { state.pumpsState = [...pumpsState] }),
-  timeTolerance: 5
+  
+  timeTolerance: 5,
+  setTimeTolerance: action((state, timeTolerance) =>  { state.timeTolerance = timeTolerance }),
 }

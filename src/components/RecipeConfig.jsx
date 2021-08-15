@@ -1,11 +1,9 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { useParams } from "react-router";
 
 const RecipeConfig = () => {
   const recipes = useStoreState(state => state.recipes)
   const setRecipes = useStoreActions(actions => actions.setRecipes)
 
-  const { model } = useParams()
   const handleNameChange = (id, name) => {
     setRecipes(recipes.map(recipe => recipe.id == id ? {...recipe, name} : recipe))
   }
@@ -28,6 +26,9 @@ const RecipeConfig = () => {
             ))}
           </div>
         </div>
+      </div>
+      <div className="card-footer">
+        <button className="button card-footer-item">Save</button>
       </div>
     </div>
   )
