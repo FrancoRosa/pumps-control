@@ -20,23 +20,14 @@ const Home = () => {
     { id: 2, pulses_per_volume: 7, timeout: 8 },
     { id: 3, pulses_per_volume: 7, timeout: 8 },
   ]
-  const savedRecipes = [
-    {
-      name: 'Ounce',
-      pumps: [
-        { id: 0, volume: 6}, { id: 1, volume: 7}, { id: 2, volume: 8}, { id: 3, volume: 9},
-      ]
-    },
-    {
-      name: 'Pint',
-      pumps: [
-        { id: 0, volume: 1}, { id: 1, volume: 2}, { id: 2, volume: 3}, { id: 3, volume: 4},
-      ]
-    }
+  
+  const recipes = [
+    {name: 'Recipe 1'},
+    {name: 'Recipe 2'},
+    {name: 'Recipe 3'}
   ]
 
   const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
-  const [recipes, setRecipes] = useLocalStorage('recipes', savedRecipes)
 
 
   const startRecipe = recipe => {
