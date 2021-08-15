@@ -14,23 +14,23 @@ const ConfigNavigation = () => {
 
   return (
     <div className="menu column is-one-fifth">
-        <p className="menu-label has-text-link">
-          <a>Config</a>
-        </p>
-        <ul className="menu-list">
-          {options.map(option => (
-            <li>
-              <Link 
-                className={option==selection && 'is-active'} 
-                onClick={() => setSelection(option)}
-                to={`/config/${option}`}>
-                  {capitalize(option)}
-              </Link>
-            </li>  
-          ))}
+      <p className="menu-label has-text-link">
+        <a>Config</a>
+      </p>
+      <ul className="menu-list">
+        {options.map(option => (
+          <li>
+            <Link 
+              className={option==selection && 'is-active'} 
+              onClick={() => setSelection(option)}
+              to={`/config/${option}`}>
+                {capitalize(option)}
+            </Link>
+          </li>  
+        ))}
 
-        </ul>
-      </div>
+      </ul>
+    </div>
   )
 }
 

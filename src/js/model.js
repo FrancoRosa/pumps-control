@@ -6,6 +6,7 @@ export default {
     {id: 1, name: 'Recipe 2'},
     {id: 2, name: 'Recipe 3'}
   ],
+  setRecipes: action((state, recipes) =>  { state.recipes = [...recipes] }),
   
   pumps: [
     {id: 0, name: 'Pump 1'},

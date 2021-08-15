@@ -1,65 +1,34 @@
-import { useLocalStorage } from "../js/useLocalStorage";
-import InputVolume from "./InputVolume";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import { useParams } from "react-router";
 
-const RecipeConfig = ({ 
-  recipe, setRecipe,
-  name, setName,
-  saveRecipe, deleteRecipe, updateRecipe,
-  calibrations 
-}) => {
-  
- 
-  const setPumpVolume = (e, id) => {
-    const newVolume = { ...recipe }
-    newVolume.pumps[id].volume = e
-    setRecipe(newVolume)
+const RecipeConfig = () => {
+  const recipes = useStoreState(state => state.recipes)
+  const setRecipes = useStoreActions(actions => actions.setRecipes)
+
+  const { model } = useParams()
+  const handleNameChange = (id, name) => {
+    setRecipes(recipes.map(recipe => recipe.id == id ? {...recipe, name} : recipe))
   }
-  
+
   return (
     <div className="card">
       <header className="card-header p-2">
-        <input 
-          type="text" 
-          value={name} 
-          onChange={e => setName(e.target.value)}
-          className="input no-frame-input title"
-        />
+        <h1>Set recipes's friendly names</h1>
       </header>
       <div className="card-content">
         <div className="content">
           <div className="columns">
-            {recipe.pumps.map(pump => (
+            {recipes.map(recipe => (
               <div className="column">
-                <InputVolume label={`Pump ${pump.id}`} 
-                  value={pump.volume} placeholder="Volume to supply"
-                  changed={false} 
-                  id={pump.id} 
-                  setValue={setPumpVolume}/>
-                <div className="card-footer is-justify-content-space-around">
-                  <div className="has-text-centered m-2">
-                    <p className="heading has-text-link">Pulses</p>
-                    <p>{(calibrations[pump.id].pulses_per_volume*recipe.pumps[pump.id].volume).toFixed(1)}</p>
-                  </div>
-                  <div className="has-text-centered m-2">
-                    <p className="heading has-text-link">Timeout</p>
-                    <p>{(calibrations[pump.id].timeout*recipe.pumps[pump.id].volume).toFixed(1)}</p>
-                  </div>
-                </div>
+                <p className="subtitle is-4 has-text-centered m-4">Recipe {recipe.id + 1}</p>
+                <input value={recipe.name} type="text"
+                  onChange={e => handleNameChange(recipe.id, e.target.value)}
+                  className="input no-frame-input title is-3 has-text-centered" />
               </div>
             ))}
           </div>
         </div>
       </div>
-      <footer className="card-footer">
-        {recipe.name === 'New recipe'?
-          <a className="card-footer-item" onClick={saveRecipe}>Save</a>
-         :
-          <>
-          <a className="card-footer-item" onClick={updateRecipe}>Update</a>
-          <a className="card-footer-item" onClick={deleteRecipe}>Delete</a>
-          </>
-        }
-      </footer>
     </div>
   )
 }

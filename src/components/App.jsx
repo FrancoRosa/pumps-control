@@ -20,7 +20,6 @@ const App = () => {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/config" component={Config} />
-            <Route path="/config/:mode" component={Config} />
             <Route path="/calibrate" component={Calibrate} />
           </Switch>
         </div>
