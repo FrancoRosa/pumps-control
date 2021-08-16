@@ -12,7 +12,7 @@ const initial = {
     {id: 2, name: 'Pump 3'},
     {id: 3, name: 'Pump 4'},
   ],
-  calibration: [
+  calibrations: [
     {
       id: 0,
       config: [ 
@@ -61,7 +61,8 @@ export default {
   pumps: getSavedStorage('pumps'),
   setPumps: action((state, pumps) =>  { state.pumps = [...pumps] }),
   
-  calibration: getSavedStorage('calibration'),
+  calibrations: getSavedStorage('calibrations'),
+  setCalibrations: action((state, calibrations) =>  { state.calibrations = [...calibrations] }),
   
   pumpsState: getSavedStorage('pumpsState'),
 

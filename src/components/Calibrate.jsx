@@ -1,29 +1,38 @@
 import CardManual from "./CardManual";
-import CalibInstructions from "./CalibInstructions.jsx";
 import { useLocalStorage } from "../js/useLocalStorage";
-import { useStore, useStoreState } from "easy-peasy";
+import { useStoreActions, useStoreState } from "easy-peasy";
+import CalibrateNavigation from "./CalibrateNavigation";
+import { useState } from "react";
+import { setSavedStorage } from "../js/helpers";
 
 const Calibrate = () => {
   const pumps = useStoreState(state => state.pumps)
-  const calibrationsInit = [
-    { id: 0, pulses_per_volume: 6, timeout: 8 },
-    { id: 1, pulses_per_volume: 6, timeout: 8 },
-    { id: 2, pulses_per_volume: 7, timeout: 8 },
-    { id: 3, pulses_per_volume: 7, timeout: 8 },
-  ]
-
-  const [calibrations, setCalibrations] = useLocalStorage('calibrations', calibrationsInit)
+  const recipes = useStoreState(state => state.recipes)
+  const calibrations = useStoreState(state => state.calibrations)
+  const setCalibrations = useStoreActions(actions => actions.setCalibrations)
+  
+  const [selection, setSelection] = useState(recipes[0])
   
   return (
-    <>
-      <CalibInstructions />
-      <div className="columns">
-        {pumps.map(pump => (
-          <CardManual key={pump.id} pump={pump}
-          calibrations={calibrations} setCalibrations={setCalibrations}/>
-        ))}
+    <div className="columns">
+      <CalibrateNavigation selection={selection} setSelection={setSelection}/>
+      <div className="card column">
+        <div className="columns">
+          {pumps.map(pump => (
+            <CardManual key={pump.id} pump={pump} recipe={selection}
+            calibrations={calibrations}
+            setCalibrations={setCalibrations}/>
+            ))}
+        </div>
+        <div className="card-footer">
+          <button 
+            onClick={() => setSavedStorage('calibrations', calibrations)}
+            className="button card-footer-item">
+              Save
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   )
 };
 
