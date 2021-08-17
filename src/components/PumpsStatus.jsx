@@ -1,5 +1,5 @@
 import { useStoreState } from "easy-peasy"
-import { percent } from "../js/helpers"
+import { percent, progress } from "../js/helpers"
 
 
 const PumpsStatus = () => {
@@ -23,6 +23,11 @@ const PumpsStatus = () => {
                 }
               </div>
             ))}
+          </div>
+          <div className="div">
+            <progress class="progress is-success" max="100" value={progress(pumpsState)}>
+              %
+            </progress>
           </div>
         </div>
       <div className="column"></div>
