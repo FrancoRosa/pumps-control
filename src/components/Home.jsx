@@ -4,24 +4,23 @@ import { useLocalStorage } from '../js/useLocalStorage';
 import { faVial, faHandPaper } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../assets/logo.png'
+import PumpsStatus from './PumpsStatus';
+import { useState } from 'react';
 
 const Home = () => {
   const pumpsState = useStoreState(state => state.pumpsState)
   const setPumpsState = useStoreActions(actions => actions.setPumpsState)
-  const handleClick = pump => {
-    startControlledPump(pump).then(resp => console.log(resp))
-  }
-
   const recipes = useStoreState(state => state.recipes)
   const calibrations = useStoreState(state => state.calibrations)
+  const [working, setWorking] = useState(false)
 
 
   const startRecipe = recipe => {
     // Update pumps time and pulses (calculating values)
     const newPumps = [...pumpsState]
     newPumps.forEach((pump, index) => {
-      pump.timeout = calibrations[index].timeout*recipe.pumps[index].volume
-      pump.pulses = calibrations[index].pulses_per_volume*recipe.pumps[index].volume
+      pump.timeout = calibrations[recipe.id].config[index].timeout
+      pump.pulses = calibrations[recipe.id].config[index].pulses
     })
     setPumpsState(newPumps)
     newPumps.forEach(pump => {
@@ -41,6 +40,7 @@ const Home = () => {
         <img src={logo} className='m-4 logo'/>
       </div>
       <div className="container ">
+        <PumpsStatus />
         <div className="columns">
           {recipes.map(recipe => (
             <div className="column is-flex is-flex-centered">
@@ -48,7 +48,7 @@ const Home = () => {
                 <a onClick={() => startRecipe(recipe)}>
                   <p className="has-text-success title is-4 m-2 has-text-centered">{recipe.name}</p>
                   <div className="title is-1 has-text-centered m-2 has-text-success">
-                    <FontAwesomeIcon icon={faVial} />
+                    <FontAwesomeIcon icon={faVial} className="" />
                   </div>
                 </a>
               </div>
