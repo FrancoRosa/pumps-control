@@ -1,4 +1,6 @@
 import { useStoreState } from "easy-peasy"
+import { percent } from "../js/helpers"
+
 
 const PumpsStatus = () => {
   const pumps = useStoreState(state => state.pumps)
@@ -10,10 +12,15 @@ const PumpsStatus = () => {
           <div className="columns">
             {pumps.map(pump => (
               <div className="column">
-                <h4 className="heading has-text-centered has-text-link">
+                <h4 className={`heading has-text-centered ${pumpsState[pump.id].on ? 'has-text-danger': 'has-text-link'}`}>
                   {pump.name}
                 </h4>
-                <p className='is-loading has-text-centered'>10%</p>
+                {pumpsState[pump.id].timeout != 0 ?
+                  <p className='has-text-centered'>
+                    {percent(pumpsState[pump.id].pulses_count,pumpsState[pump.id].pulses)} %
+                  </p> :
+                  <p className='has-text-centered'>- -</p>
+                }
               </div>
             ))}
           </div>

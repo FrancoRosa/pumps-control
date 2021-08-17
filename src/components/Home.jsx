@@ -24,7 +24,7 @@ const Home = () => {
     })
     setPumpsState(newPumps)
     newPumps.forEach(pump => {
-      startControlledPump(pump)
+      if (pump.timeout != 0) startControlledPump(pump)
     });
   }
 

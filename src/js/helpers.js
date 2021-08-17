@@ -9,3 +9,7 @@ export const capitalize = text => {
 export const setSavedStorage = (key, obj) => {
   window.localStorage.setItem(key, JSON.stringify(obj))
 }
+
+export const percent = (part,total) => {
+  return (100*(part/total)).toFixed()
+}
