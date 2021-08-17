@@ -1,10 +1,17 @@
 import { useStoreState } from "easy-peasy"
+import { useEffect, useState } from "react"
 import { percent, progress } from "../js/helpers"
 
 
 const PumpsStatus = () => {
   const pumps = useStoreState(state => state.pumps)
   const pumpsState = useStoreState(state => state.pumpsState)
+  const [working, setWorking] = useState(false) 
+  
+  useEffect(()=> {
+    setWorking(pumpsState.map(p => p.on).reduce((a,b)=>a||b))
+  }, [pumpsState])
+
   return (
     <div className="columns">
       <div className="column"></div>
@@ -25,7 +32,7 @@ const PumpsStatus = () => {
             ))}
           </div>
           <div className="div">
-            <progress class="progress is-success" max="100" value={progress(pumpsState)}>
+            <progress class={`progress is-small ${working ? 'is-success': 'is-dark'}`} max="100" value={progress(pumpsState)}>
               %
             </progress>
           </div>
