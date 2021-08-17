@@ -1,3 +1,32 @@
+.is-size-1 {
+  font-size: 3rem
+}
+.is-size-2 {
+  font-size: 2.5rem
+}
+.is-size-3 {
+  font-size: 2rem
+}
+.is-size-4 {
+  font-size: 1.5rem
+}
+.is-size-5 {
+  font-size: 1.25rem
+}
+.is-size-6 {
+  font-size: 1rem
+}
+.is-size-7 {
+  font-size: 0.75rem
+}
+.is-size-8 {
+  font-size: 0.5rem
+}
+
+.rpi-width {
+  width: 800px;
+}
+
 .is-justify-content-center {
   justify-content: center;
 } 
@@ -6,12 +35,47 @@
   align-items: center;
 }
 
+.is-flex-centered {
+  justify-content: center;
+  align-items: center;
+} 
+
 .is-flex-direction-column {
   flex-direction: column;
 }
 
+.is-flex-direction-row {
+  flex-direction: row
+}
+
+.is-justify-content-space-between	{
+  justify-content: space-between;
+}
+
+.is-justify-content-space-around	{
+  justify-content: space-around;
+}
+
 .full-width {
   width: 100vw;
+}
+
+.home-card {
+  min-width: 10em;
+}
+
+.logo {
+  height: 80px;
+}
+.no-frame-input {
+  background-color: transparent;
+  border: 0px solid;
+  height: 1em;
+  width: 100%;
+  color: #CCC;
+  margin: .75em .1em;
+  padding: 0.75em .25em;
+  cursor: pointer;
 }
 
 .m-0 { margin: 0; }

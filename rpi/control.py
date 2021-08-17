@@ -83,8 +83,13 @@ def send_status_debug():
       if pump['on']:
         socketio.send(json.dumps({
           'id': pump['id'],
+<<<<<<< HEAD
           'pulses_count': pump['pulses_count'],
           'time_count': round(pump['time_count'],1),
+=======
+          'pulses_count':pump['pulses_count'],
+          'time_count':round(pump['time_count'],1),
+>>>>>>> f1167c171b8f2f70504f86cc103e8557a06d4db7
           'on':pump['on'],
         }), broadcast=True)
     sleep(1)        

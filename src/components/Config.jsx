@@ -1,22 +1,29 @@
-import CardConfig from "./CardConfig";
-import { useContext } from 'react';
-import { PumpsContext } from '../js/PumpsContext';
+import { faPlus, faVial } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { useEffect, useState } from 'react';
+import { Route, Switch, useParams } from 'react-router-dom';
+import { useLocalStorage } from '../js/useLocalStorage';
+import ConfigNavigation from './ConfigNavigation';
+import PumpsConfig from './PumpsConfig';
+import RecipeConfig from './RecipeConfig';
+import ToleranceConfig from './ToleranceConfig';
 
 const Config = () => {
-          
-  const {pumps, setPumps} = useContext(PumpsContext)
-  
-  const handleChange = () => {
-    console.log('...')
-  }
-
   return (
     <div className="columns">
-      {pumps.map(pump => (
-        <CardConfig key={pump.id} pump={pump}/>
-      ))}
+      <ConfigNavigation/>
+      <div className="column p-4">
+        <Switch>
+          <Route path="/config/recipes" component={RecipeConfig} />
+          <Route path="/config/pumps" component={PumpsConfig} />
+          <Route path="/config/tolerance" component={ToleranceConfig} />
+          <Route path="/config" component={RecipeConfig} />
+        </Switch>
+      </div>
     </div>
   )
+  
 };
 
 export default Config;

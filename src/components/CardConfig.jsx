@@ -17,7 +17,7 @@ const CardConfig = ({ pump }) => {
 
   return (
     <div className="column">
-      <div className="card m-4 p-4">
+      <div className="card m-2 p-2">
         <header className="card-header">
           <p className="card-header-title title is-3 is-centered">
             {pump.name}
