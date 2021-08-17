@@ -122,7 +122,7 @@ def start_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
   pump['timeout'] = timeout
   pump['pulses_count'] = 0
   pump['time_count'] = 0
-  pump['on'] = True
+  pump['on'] = pulses != 0
   pumps_config[id] = pump
   socketio.send(json.dumps(pump), broadcast=True)
 
@@ -142,7 +142,7 @@ def startcontrolled():
   config = request.get_json()
   id = int(config['id'])
   pulses = int(config['pulses'])
-  timeout =  int(config['timeout'])
+  timeout =  float(config['timeout'])
   start_pump(id, pulses, timeout)
   response = make_response(jsonify({
     "id": id,
