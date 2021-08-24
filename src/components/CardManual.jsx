@@ -66,6 +66,10 @@ const CardManual = ({ pump, recipe }) => {
     setPulsesPerUnit(0)
     stopPump(pump).then(() => console.log('stop pump'))
     setRunning(false)
+    const newCalibrations = [...calibrations]
+    newCalibrations[recipe.id].config[pump.id].pulses = 0
+    newCalibrations[recipe.id].config[pump.id].timeout = 0
+    setCalibrations(newCalibrations)
   }
 
   return (
