@@ -3,13 +3,14 @@ import { useEffect, useState } from "react"
 
 const Notifications = () => {
   const {id, on, pulses, pulses_count} = useStoreState(state => state.pumpMessage)
+  const pumps = useStoreState(state => state.pumps)
   const [notifications, setNotifications] = useState([])
   useEffect(() => {
     console.log('...on changed')
     if (!on) {
       if (pulses > pulses_count) {
         setNotifications(
-          [...notifications, `Maintenace/calibration required on ${id}`]
+          [...notifications, `Check ${pumps[id].name} pump`]
         )
       }
     }
@@ -22,7 +23,7 @@ const Notifications = () => {
           <button
             class="delete is-large"
             onClick={() => setNotifications(notifications.filter(t => t != notification))}/>
-          <p className="pl-4 pr-4">{notification}</p>
+          <p className="pl-1 pr-1">{notification}</p>
         </div>
       )}
     </>
