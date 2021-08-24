@@ -15,16 +15,19 @@ const socket = io.connect('http://localhost:9999');
 const Tabs = () => {
   const pumpsState = useStoreState(state => state.pumpsState)
   const setPumpsState = useStoreActions(actions => actions.setPumpsState)
+  const setPumpMessage = useStoreActions(actions => actions.setPumpMessage)
   const pumpsInitialState = [{},{},{},{}]
   
   useEffect(() => {
-    const updatePumps = msg => {
-      const pump = JSON.parse(msg);
+    const updatePumps = pump => {
       pumpsInitialState[pump.id] =  {...pumpsInitialState[pump.id], ...pump}
       setPumpsState([...pumpsInitialState])
     }
     
-    socket.on('message', msg => updatePumps(msg))
+    socket.on('message', msg => {
+      let objMsg = JSON.parse(msg)
+      updatePumps(objMsg); console.log(objMsg); setPumpMessage(objMsg)
+    })
 
     return () => {
       socket.off('message');

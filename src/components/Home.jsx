@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../assets/logo.png'
 import PumpsStatus from './PumpsStatus';
 import { useEffect, useState } from 'react';
+import Notifications from './Notifications';
 
 const Home = () => {
   const pumpsState = useStoreState(state => state.pumpsState)
@@ -48,6 +49,7 @@ const Home = () => {
       </div>
       <div className="container ">
         <PumpsStatus />
+        <Notifications />
         <div className="columns">
           {recipes.map(recipe => (
             <div className="column is-flex is-flex-centered">
@@ -64,17 +66,17 @@ const Home = () => {
               </div>
             </div>
           ))}
-        <div className="column is-one-quarter is-flex is-flex-centered">
-          <div className="card is-flex-direction-column is-flex-centered">
-            <a onClick={stopRecipe}>
-              <p className={`${working ? 'has-text-danger': 'has-text-grey'} title is-4 m-4 has-text-centered`}>Stop</p>
-              <div className={`${working ? 'has-text-danger': 'has-text-grey'} title is-1 has-text-centered m-4`}>
-                <FontAwesomeIcon icon={faHandPaper} />
-              </div>
-            </a>
+          <div className="column is-one-quarter is-flex is-flex-centered">
+            <div className="card is-flex-direction-column is-flex-centered">
+              <a onClick={stopRecipe}>
+                <p className={`${working ? 'has-text-danger': 'has-text-grey'} title is-4 m-4 has-text-centered`}>Stop</p>
+                <div className={`${working ? 'has-text-danger': 'has-text-grey'} title is-1 has-text-centered m-4`}>
+                  <FontAwesomeIcon icon={faHandPaper} />
+                </div>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </>
   )
