@@ -7,6 +7,7 @@ import logo from '../assets/logo.png'
 import PumpsStatus from './PumpsStatus';
 import { useEffect, useState } from 'react';
 import Notifications from './Notifications';
+import useKey from '../js/useKey';
 
 const Home = () => {
   const pumpsState = useStoreState(state => state.pumpsState)
@@ -41,6 +42,12 @@ const Home = () => {
     if (working == true && filling == false) setSelectedRecipe(false)
     setWorking(filling)
   },[pumpsState])
+
+
+  useKey("KeyA", () => startRecipe(recipes[0]))
+  useKey("KeyS", () => startRecipe(recipes[1]))
+  useKey("KeyD", () => startRecipe(recipes[2]))
+  useKey("KeyF", stopRecipe)
 
   return (
     <>
