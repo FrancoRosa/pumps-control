@@ -5,6 +5,7 @@ import Home from './Home';
 import Config from './Config';
 import Calibrate from './Calibrate';
 import model from '../js/model'
+import Notifications from './Notifications';
 
 
 const store = createStore(model)

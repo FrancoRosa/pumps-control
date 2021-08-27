@@ -65,9 +65,12 @@ export default {
   setCalibrations: action((state, calibrations) =>  { state.calibrations = [...calibrations] }),
   
   pumpsState: getSavedStorage('pumpsState'),
-
   setPumpsState: action((state, pumpsState) =>  { state.pumpsState = [...pumpsState] }),
   
   timeTolerance: getSavedStorage('timeTolerance'),
   setTimeTolerance: action((state, timeTolerance) =>  { state.timeTolerance = timeTolerance }),
+
+  pumpMessage: {},
+  setPumpMessage: action((state, message) =>  { state.pumpMessage = message }),
+
 }

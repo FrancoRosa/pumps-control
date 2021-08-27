@@ -66,6 +66,10 @@ const CardManual = ({ pump, recipe }) => {
     setPulsesPerUnit(0)
     stopPump(pump).then(() => console.log('stop pump'))
     setRunning(false)
+    const newCalibrations = [...calibrations]
+    newCalibrations[recipe.id].config[pump.id].pulses = 0
+    newCalibrations[recipe.id].config[pump.id].timeout = 0
+    setCalibrations(newCalibrations)
   }
 
   return (
@@ -104,13 +108,14 @@ const CardManual = ({ pump, recipe }) => {
           <p className="heading has-text-link has-text-centered mt-3 is-size-8">Results</p>
           <div className="is-flex is-justify-content-space-around mb-2">
           <div>
-            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Pulses</p>
-            <p className="title is-3 success has-text-centered">{pulsesPerUnit}</p>
-          </div>
-          <div>
             <p className="has-text-link heading has-text-centered mt-4 is-size-8">Timeout</p>
             <p className="title is-3 success has-text-centered">{fillTimeout}</p>
           </div>
+          <div>
+            <p className="has-text-link heading has-text-centered mt-4 is-size-8">Pulses</p>
+            <p className="title is-3 success has-text-centered">{pulsesPerUnit}</p>
+          </div>
+          
         </div>
         </div>
       </div>

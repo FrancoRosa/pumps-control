@@ -9,3 +9,18 @@ export const capitalize = text => {
 export const setSavedStorage = (key, obj) => {
   window.localStorage.setItem(key, JSON.stringify(obj))
 }
+
+export const percent = (part,total) => {
+  return (100*(part/total)).toFixed()
+}
+
+export const sum = arr => {
+  return arr.reduce((a,b) => a + b)
+}
+
+export const progress = arr => {
+  return percent(
+    sum(arr.map(p => p.pulses_count)),
+    sum(arr.map(p => p.pulses))
+  )
+}

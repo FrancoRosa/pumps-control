@@ -1,7 +1,107 @@
 # Pumps control
+
 >> Web application to read volume sensors and control pumps
 
+## Deploy instructions:
+
+### Requirements
+
+* Install node on raspberry
+    https://www.makersupplies.sg/blogs/tutorials/how-to-install-node-js-and-npm-on-the-raspberry-pi
+
+* Install pm2 (Service manager)
+    https://www.npmjs.com/package/pm2
+
+* Install serve (to serve the build file of the UI)
+    https://pm2.keymetrics.io/docs/usage/expose/
+
+* Install the following python3 modules
+  + flask-cors
+  + flask-socketio
+
+### PM2 Settings
+
+As pi user:
+*   `pm2 startup`  to create the pm2 daemon, follow the instructions provided in the terminal
+*   `pm2 start /home/pi/pumps-control/control.py --name "control" --interpreter python3` to add the service to PM2.
+*   `pm2 save` to save the changes and run the `control.py` script from boot
+
+As root user:
+*   `pm2 startup`  to create the pm2 daemon, follow the instructions provided in the terminal
+*   `pm2 serve /home/pi/pumps-control/build 8080 --name 'web' ` to add the service to PM2.
+*   `pm2 save` to save the changes and serve the web application script from boot
+
+### Chromium Settings
+
+In order to display the application from boot the following steps are required:
+* Create a `/home/pi/.Xsession` file to tell the system to launch Chromium on Kiok mode and show to the local UI, to do that add the following line on that file:
+ `chromium-browser --kiosk http://localhost:8080`
+
+* To match your display size edit the file `/boot/config.txt` modify the line bellow as required:
+
+```BASH
+# uncomment to force a console size. By default it will be display's size minus
+# overscan.
+#framebuffer_width=1280
+#framebuffer_height=720
+
+```
+
+### Hardware Settings
+
+This version of the sofware uses the GPIO as stated bellow.
+
+Flow sensors:
+
+GPIO|MODE|DESCRIPTION
+-----|-----|-----
+GPIO18|Input|Flow sensor 1
+GPIO23|Input|Flow sensor 2
+GPIO24|Input|Flow sensor 3
+GPIO12|Input|Flow sensor 4
+
+Pump control:
+GPIO|MODE|DESCRIPTION
+-----|-----|-----
+GPIO4|Output|Pump 1
+GPIO17|Output|Pump 2
+GPIO27|Output|Pump 3
+GPIO22|Output|Pump 4
+
+Buttons:
+GPIO|MODE|DESCRIPTION
+-----|-----|-----
+GPIO0|Input|Button 1
+GPIO5|Input|Button 2
+GPIO6|Input|Button 3
+GPIO13|Input|Button 4
+
+### Buttons configuration:
+To simulate the buttons actions on the react app, the useKey hook was used. Then you should configure the GPIO to work as a keyboard and match the KEYS used in the UI
+
+For more information:
+https://blog.geggus.net/2017/01/setting-up-a-gpio-button-keyboard-on-a-raspberry-pi/
+
+```JS
+useKey("KeyA", () => startRecipe(recipes[0]))
+useKey("KeyS", () => startRecipe(recipes[1]))
+useKey("KeyD", () => startRecipe(recipes[2]))
+useKey("KeyF", stopRecipe)
+```
+
+
+Home buttons:
+
+GPIO|KEY|MODE|DESCRIPTION
+-----|---|--|-----
+GPIO0|A|Input|Start recipe 1
+GPIO5|S|Input|Start recipe 2
+GPIO6|D|Input|Start recipe 3
+GPIO13|F|Input|Stop Pumps
+
+
 ## Scope
+
 ### Overview: 
 The mixing station will be a two-part system.  The first part will be a control box consisting of a Raspberry PI microcontroller board, a 7+ touch screen, 4 hardwired physical buttons, (4) 24 VDC relays, a wifi usb adapter with antenna, a 5 volt power supply and a 24 volt power supply.  The fore mentioned components will be housed in a metal box with enough physical rigidity and weather tightness to withstand very harsh indoor environments like car repair shops, maintenance shop, etc.
 
@@ -43,21 +143,22 @@ Even though the Raspberry Pi has an on board wifi a usb wifi adapter will be use
     - Users can test flow rate periodically in calibration screen to compare to flow meter
 
 ## Deliverables:
-- Dosage pumps communicate start/stop with RPI	0	0	4	0
-- Dosage pumps measure volume from pulse count	0	0	4	0
-- User interface as depicted in PRD (GUI2)	16	0	0	0
-- Dispenser setup for three volumes	0	0	4	0
-- RPI commmuniate with flow meter via pulse count	0	0	4	0
-- Calibration screen allows user to change mix volume	6	0	0	0
-- Calibration screen allows user to run pump manually to prime	6	0	0	0
-- Calibration screen allows each pump to be ran manually for testing volume	6	0	0	0
-- RPI communicate with onboard WIFI antenna for server access	0	0	4	0
-- Usage reports generated and sent/retrieved from admin panel	0	8	8	0
-- Set services/ui to run from boot	0	0	4	0
-- Build phisical test environment to emulate inputs and ouputs	0	0	4	0
-- Admin experience				
-- Can send software updates to RPI	0	0	4	0
-- Can view reports of useage from RPI	0	2	2	0
-- Can add / remove user accounts	0	4	4	0
-- Can track historical data per user	0	4	0	0
-- Can search and sort user accounts by using ID#, volume, type	0	4	0	0
+
+* Dosage pumps communicate start/stop with RPI	0	0	4	0
+* Dosage pumps measure volume from pulse count	0	0	4	0
+* User interface as depicted in PRD (GUI2)	16	0	0	0
+* Dispenser setup for three volumes	0	0	4	0
+* RPI commmuniate with flow meter via pulse count	0	0	4	0
+* Calibration screen allows user to change mix volume	6	0	0	0
+* Calibration screen allows user to run pump manually to prime	6	0	0	0
+* Calibration screen allows each pump to be ran manually for testing volume	6	0	0	0
+* RPI communicate with onboard WIFI antenna for server access	0	0	4	0
+* Usage reports generated and sent/retrieved from admin panel	0	8	8	0
+* Set services/ui to run from boot	0	0	4	0
+* Build phisical test environment to emulate inputs and ouputs	0	0	4	0
+* Admin experience				
+* Can send software updates to RPI	0	0	4	0
+* Can view reports of useage from RPI	0	2	2	0
+* Can add / remove user accounts	0	4	4	0
+* Can track historical data per user	0	4	0	0
+* Can search and sort user accounts by using ID#, volume, type	0	4	0	0
