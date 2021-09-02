@@ -210,3 +210,9 @@
 .pr-4 {
   padding-right: 1em;
 }
+
+.wifi {
+  position: fixed;
+  top: 0.75em;
+  right: 1em;
+}

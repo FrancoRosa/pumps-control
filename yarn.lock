@@ -11453,6 +11453,11 @@
   dependencies:
     "minimalistic-assert" "^1.0.0"
 
+"web-pingjs@^1.0.1":
+  "integrity" "sha512-rlAeWwOWLYpFUAzi1edajOm6iWsP4EVnjl7qXsyXglVt8Wuwxo1d8GQgeyZ6Ze3gRf0xtvQCmb2eQ1OOAGbN1A=="
+  "resolved" "https://registry.npmjs.org/web-pingjs/-/web-pingjs-1.0.1.tgz"
+  "version" "1.0.1"
+
 "web-vitals@^1.0.1":
   "integrity" "sha512-PFMKIY+bRSXlMxVAQ+m2aw9c/ioUYfDgrYot0YUa+/xa0sakubWhSDyxAKwzymvXVdF4CZI71g06W+mqhzu6ig=="
   "resolved" "https://registry.npmjs.org/web-vitals/-/web-vitals-1.1.2.tgz"

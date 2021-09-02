@@ -6,6 +6,7 @@ import Config from './Config';
 import Calibrate from './Calibrate';
 import model from '../js/model'
 import Notifications from './Notifications';
+import Wifi from './Wifi';
 
 
 const store = createStore(model)
@@ -14,6 +15,7 @@ const App = () => {
   
   return (
     <StoreProvider store={store}>
+      <Wifi />
       <Tabs />
         <p className="success"></p>
         <Redirect exact from="/" to="/home" />
