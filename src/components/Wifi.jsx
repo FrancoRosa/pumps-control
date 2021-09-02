@@ -9,7 +9,7 @@ const Wifi = () => {
   useEffect(() => {
     setInterval(() => {
       setConnected(navigator.onLine)
-    }, 20*1000);
+    }, 5*1000);
   }, [])
 
   return (

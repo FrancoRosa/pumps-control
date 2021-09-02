@@ -201,6 +201,17 @@ def info(id):
     return response
 
 
+@app.route('/api/network', methods=['POST'])
+def setNetwork():
+    credentials = request.get_json()
+    print(credentials)
+    response = make_response(jsonify({
+        "message": True,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
 @socketio.on('message')
 def handle_message(msg):
     print("Message: " + msg)

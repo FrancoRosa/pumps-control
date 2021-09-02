@@ -32,3 +32,10 @@ export const infoPump = async (id) => {
   const response = await axios.get(url)
   return response.data
 }
+
+export const updateNetwork = async (ssid, pass) => {
+  console.log('... configure wifi');
+  const url = `http://${host}:9999/api/network`;
+  const response = await axios.post(url,{ssid, pass})
+  return response.data
+}

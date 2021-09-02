@@ -5,12 +5,10 @@ import { capitalize } from "../js/helpers"
 const ConfigNavigation = () => {
   
   const options = [
-    'recipes', 'pumps', 'tolerance'
+    'recipes', 'pumps', 'tolerance', 'wireless', 'remote', 'user'
   ]
   const { mode } = useParams()
   const [selection, setSelection] = useState(mode ? mode : options[0])
-  
- 
 
   return (
     <div className="menu column is-one-fifth">

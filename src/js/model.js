@@ -47,7 +47,9 @@ const initial = {
     { id: 2, total_pulses: 123, on: false, timeout: 5, pulses: 10, pulses_count: 0, time_count: 0},
     { id: 3, total_pulses: 123, on: false, timeout: 5, pulses: 10, pulses_count: 0, time_count: 0},
   ],
-  timeTolerance: 5
+  timeTolerance: 5,
+  wifissid: 'wifi name',
+  wifipass: 'wifi password'
 }
 
 const getSavedStorage = key => {
@@ -69,6 +71,11 @@ export default {
   
   timeTolerance: getSavedStorage('timeTolerance'),
   setTimeTolerance: action((state, timeTolerance) =>  { state.timeTolerance = timeTolerance }),
+
+  wifissid: getSavedStorage('wifissid'),
+  setWifissid: action((state, wifissid) =>  { state.wifissid = wifissid }),
+  wifipass: getSavedStorage('wifipass'),
+  setWifipass: action((state, wifipass) =>  { state.wifipass = wifipass }),
 
   pumpMessage: {},
   setPumpMessage: action((state, message) =>  { state.pumpMessage = message }),
