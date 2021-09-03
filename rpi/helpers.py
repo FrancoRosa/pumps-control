@@ -1,16 +1,31 @@
-from subprocess import run
+from subprocess import run, check_output
+from re import search
 
 
 def get_wifi_card():
-    info = run('ip route list', capture_output=True)
-    info = str(info.stdout).split(' ')
+    info = check_output(['ip', 'route', 'list'])
+    info = info.decode('ascii').split(' ')
     for text in info:
-        if 'wlan' in text:
+        if search('^wl', text):
             return text
 
 
 def scan_wifi():
-    print('cancell wifi')
+    card = get_wifi_card()
+    command_output = check_output(['iwlist', card, 'scan'])
+    text_output = command_output.decode('ascii').split('\n')
+    result = []
+    for text in text_output:
+        if 'Signal level=' in text:
+            snr = text.split('Signal level=')[1]
+        if 'ESSID:' in text:
+            ssid = text.split(':')[1]
+
+            result.append({
+                'ssid': ssid,
+                'snr': snr
+            })
+    print(result)
 
 
 def network_conf(ssid, passwd):
@@ -30,4 +45,4 @@ def network_conf(ssid, passwd):
     file.write(config)
     file.close()
     card = get_wifi_card()
-    run('wpa_cli -i {} reconfigure'.format(card))
+    check_output(['wpa_cli', '-i', card, 'reconfigure'])
