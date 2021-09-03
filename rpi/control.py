@@ -1,3 +1,4 @@
+from rpi.helpers import get_wifi_card, network_conf
 from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
@@ -204,9 +205,29 @@ def info(id):
 @app.route('/api/network', methods=['POST'])
 def setNetwork():
     credentials = request.get_json()
-    print(credentials)
+    network_conf(credentials['wifissid'], credentials['wifipass'])
     response = make_response(jsonify({
         "message": True,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/network/card')
+def getNetworkCard():
+    card = get_wifi_card()
+    response = make_response(jsonify({
+        "card": card,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/network/scan')
+def getNetworkCard():
+    card = get_wifi_card()
+    response = make_response(jsonify({
+        "card": card,
     }), 200)
     response.headers["Content-Type"] = "application/json"
     return response

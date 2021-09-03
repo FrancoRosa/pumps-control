@@ -1,7 +1,19 @@
 from subprocess import run
 
 
-def create_network_conf(ssid, passwd):
+def get_wifi_card():
+    info = run('ip route list', capture_output=True)
+    info = str(info.stdout).split(' ')
+    for text in info:
+        if 'wlan' in text:
+            return text
+
+
+def scan_wifi():
+    print('cancell wifi')
+
+
+def network_conf(ssid, passwd):
     file = open('/etc/wpa_supplicant/wpa_supplicant.conf', 'r')
     config = (
         'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n'
@@ -19,14 +31,3 @@ def create_network_conf(ssid, passwd):
     file.close()
     card = get_wifi_card()
     run('wpa_cli -i {} reconfigure'.format(card))
-
-
-def get_wifi_card():
-    info = run('ip route list', capture_output=True)
-    info = str(info.stdout).split(' ')
-    for text in info:
-        if 'wlan' in text:
-            return text
-
-
-print(create_network_conf('ssid', 'estas'))
