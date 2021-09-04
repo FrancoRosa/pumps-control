@@ -65,7 +65,7 @@
 }
 
 .logo {
-  height: 80px;
+  height: 70px;
 }
 .no-frame-input {
   background-color: transparent;
@@ -215,4 +215,13 @@
   position: fixed;
   top: 0.75em;
   right: 1em;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
