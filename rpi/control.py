@@ -258,4 +258,4 @@ def handle_message(msg):
     print("Message: " + msg)
 
 
-app.run(host='0.0.0.0' debug=False, port=port)
+app.run(host='0.0.0.0', debug=False, port=port)

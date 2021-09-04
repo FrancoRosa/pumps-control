@@ -33,7 +33,7 @@ def scan_wifi():
                 'ssid': ssid,
                 'snr': snr
             })
-    print(result)
+    return result
 
 
 def network_conf(ssid, passwd):
