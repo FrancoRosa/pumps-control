@@ -39,3 +39,17 @@ export const updateNetwork = async (ssid, pass) => {
   const response = await axios.post(url,{ssid, pass})
   return response.data
 }
+
+export const devicePowerOff = async () => {
+  console.log('... shutting down');
+  const url = `http://${host}:9999/api/poweroff`;
+  const response = await axios.post(url)
+  return response.data
+}
+
+export const deviceRestart = async () => {
+  console.log('... restarting');
+  const url = `http://${host}:9999/api/restart`;
+  const response = await axios.post(url)
+  return response.data
+}

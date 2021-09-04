@@ -2,6 +2,14 @@ from subprocess import run, check_output
 from re import search
 
 
+def device_restart():
+    check_output(['reboot', 'now'])
+
+
+def device_shutdown():
+    check_output(['shutdown', 'now'])
+
+
 def get_wifi_card():
     info = check_output(['ip', 'route', 'list'])
     info = info.decode('ascii').split(' ')

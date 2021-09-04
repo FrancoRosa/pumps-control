@@ -1,4 +1,4 @@
-from rpi.helpers import get_wifi_card, network_conf
+from rpi.helpers import device_restart, device_shutdown, get_wifi_card, network_conf
 from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
@@ -228,6 +228,26 @@ def getNetworkCard():
     card = get_wifi_card()
     response = make_response(jsonify({
         "card": card,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/poweroff', methods=['POST'])
+def poweroff():
+    device_shutdown()
+    response = make_response(jsonify({
+        "message": True,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/restart', methods=['POST'])
+def restart():
+    device_restart()
+    response = make_response(jsonify({
+        "message": True,
     }), 200)
     response.headers["Content-Type"] = "application/json"
     return response

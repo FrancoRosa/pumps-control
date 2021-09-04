@@ -24,7 +24,8 @@
 As pi user:
 *   `pm2 startup`  to create the pm2 daemon, follow the instructions provided in the terminal
 *   `pm2 start /home/pi/pumps-control/control.py --name "control" --interpreter python3` to add the service to PM2.
-*   `pm2 save` to save the changes and run the `control.py` script from boot
+*   `pm2 start /home/pi/pumps-control/rpi/update.py --name "update" --interpreter python3 --no-autorestart` to add update service to pm2.
+*   `pm2 save` to save the changes and run the `control.py` and `update.py` script from boot
 
 As root user:
 *   `pm2 startup`  to create the pm2 daemon, follow the instructions provided in the terminal
