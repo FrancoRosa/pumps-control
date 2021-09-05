@@ -7,9 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import Tab from './Tab';
-import io from "socket.io-client";
+import { socket } from '../api/api';
 
-const socket = io.connect('http://localhost:9999');
 
 
 const Tabs = () => {

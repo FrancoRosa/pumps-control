@@ -1,4 +1,4 @@
-from helpers import device_restart, device_shutdown, get_wifi_card, network_conf
+from helpers import device_restart, device_shutdown, get_wifi_card, network_conf, scan_wifi
 from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
@@ -225,9 +225,9 @@ def getNetworkCard():
 
 @app.route('/api/network/scan')
 def getNetworkCardList():
-    card = get_wifi_card()
+    networks = scan_wifi()
     response = make_response(jsonify({
-        "card": card,
+        "networks": networks,
     }), 200)
     response.headers["Content-Type"] = "application/json"
     return response

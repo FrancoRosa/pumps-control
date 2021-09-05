@@ -1,7 +1,11 @@
 import axios from 'axios';
+import io from "socket.io-client";
 
-// const host='localhost'
-const host='raspberrypi.local'
+const host='localhost'
+// const host='raspberrypi.local'
+
+
+export const socket = io.connect(`http://${host}:9999`);
 
 export const startControlledPump = async (pump) => {
   console.log('... starting controlled pump');
@@ -30,6 +34,20 @@ export const stopPump = async (pump) => {
 export const infoPump = async (id) => {
   console.log('... getting events');
   const url = `http://${host}:9999/api/info/${id}`;
+  const response = await axios.get(url)
+  return response.data
+}
+
+export const deviceNetCard = async () => {
+  console.log('... getting events');
+  const url = `http://${host}:9999/api/network/card`;
+  const response = await axios.get(url)
+  return response.data
+}
+
+export const deviceNetScan = async () => {
+  console.log('... getting events');
+  const url = `http://${host}:9999/api/network/scan`;
   const response = await axios.get(url)
   return response.data
 }
