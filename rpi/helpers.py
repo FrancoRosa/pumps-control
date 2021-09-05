@@ -37,7 +37,7 @@ def scan_wifi():
 
 
 def network_conf(ssid, passwd):
-    file = open('/etc/wpa_supplicant/wpa_supplicant.conf', 'r')
+    file = open('/etc/wpa_supplicant/wpa_supplicant.conf', 'w')
     config = (
         'ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev\n'
         'country=US\n'
@@ -46,7 +46,7 @@ def network_conf(ssid, passwd):
         'network={\n'
         f' ssid="{ssid}"\n'
         f' psk="{passwd}"\n'
-        ' scan_ssid=1'
+        ' scan_ssid=1\n'
         '}\n'
         '\n'
     )

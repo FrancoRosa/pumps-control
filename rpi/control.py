@@ -205,7 +205,7 @@ def info(id):
 @app.route('/api/network', methods=['POST'])
 def setNetwork():
     credentials = request.get_json()
-    network_conf(credentials['wifissid'], credentials['wifipass'])
+    network_conf(credentials['ssid'], credentials['pass'])
     response = make_response(jsonify({
         "message": True,
     }), 200)
