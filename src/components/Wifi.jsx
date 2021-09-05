@@ -1,7 +1,6 @@
 import { faWifi } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { useEffect, useState } from "react"
-import { ping } from "../api/api"
 
 const Wifi = () => {
   const [connected, setConnected] = useState(false)
