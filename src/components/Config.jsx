@@ -10,6 +10,7 @@ import RecipeConfig from './RecipeConfig';
 import ToleranceConfig from './ToleranceConfig';
 import WirelessConfig from './WirelessConfig';
 import SystemConfig from './SystemConfig';
+import RemoteConfig from './RemoteConfig';
 
 const Config = () => {
   return (
@@ -22,6 +23,7 @@ const Config = () => {
           <Route path="/config/tolerance" component={ToleranceConfig} />
           <Route path="/config/wireless" component={WirelessConfig} />
           <Route path="/config/system" component={SystemConfig} />
+          <Route path="/config/remote" component={RemoteConfig} />
           <Route path="/config" component={RecipeConfig} />
         </Switch>
       </div>

@@ -5,7 +5,7 @@ import { capitalize } from "../js/helpers"
 const ConfigNavigation = () => {
   
   const options = [
-    'recipes', 'pumps', 'tolerance', 'wireless', 'remote', 'user', 'system'
+    'recipes', 'pumps', 'tolerance', 'wireless', 'remote', 'system'
   ]
   const { mode } = useParams()
   const [selection, setSelection] = useState(mode ? mode : options[0])

@@ -1,8 +1,17 @@
 import { faPowerOff, faRedo } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { devicePowerOff, deviceRestart } from "../api/api"
+import { useEffect } from "react"
+import { useState } from "react/cjs/react.development"
+import { devicePowerOff, deviceRestart, getDeviceId } from "../api/api"
 
 const SystemConfig = () => {
+  
+  const [id, setId] = useState('')
+  
+  useEffect(() => {
+    getDeviceId().then(res => setId(res.id))
+  }, [])
+
   return(
     <div className="card">
       <header className="card-header p-2">
@@ -25,6 +34,11 @@ const SystemConfig = () => {
             </div>
           </div>
         </div>
+        <footer className="card-footer is-flex-centered">
+          <p className="heading has-text-link is-size-6 is-centered">
+            id: {id}
+          </p>
+        </footer>
       </div>
     </div>
   )

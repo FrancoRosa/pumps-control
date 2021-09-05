@@ -52,6 +52,13 @@ export const deviceNetScan = async () => {
   return response.data
 }
 
+export const getDeviceId = async () => {
+  console.log('... getting device id');
+  const url = `http://${host}:9999/api/id`;
+  const response = await axios.get(url)
+  return response.data
+}
+
 export const updateNetwork = async (ssid, pass) => {
   console.log('... configure wifi');
   const url = `http://${host}:9999/api/network`;

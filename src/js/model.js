@@ -49,7 +49,8 @@ const initial = {
   ],
   timeTolerance: 5,
   wifissid: 'wifi name',
-  wifipass: 'wifi password'
+  wifipass: 'wifi password',
+  server: 'http://example.com',
 }
 
 const getSavedStorage = key => {
@@ -74,8 +75,12 @@ export default {
 
   wifissid: getSavedStorage('wifissid'),
   setWifissid: action((state, wifissid) =>  { state.wifissid = wifissid }),
+  
   wifipass: getSavedStorage('wifipass'),
   setWifipass: action((state, wifipass) =>  { state.wifipass = wifipass }),
+
+  server: getSavedStorage('server'),
+  setServer: action((state, server) =>  { state.server = server }),
 
   pumpMessage: {},
   setPumpMessage: action((state, message) =>  { state.pumpMessage = message }),
