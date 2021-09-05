@@ -1,10 +1,7 @@
 import { useStoreActions, useStoreState } from "easy-peasy"
 import { deviceNetCard, deviceNetScan, updateNetwork } from "../api/api"
 import { setSavedStorage } from "../js/helpers"
-import KeyboardReact from "react-simple-keyboard"
-import "react-simple-keyboard/build/css/index.css";
-import { useState } from "react/cjs/react.development";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const WirelessConfig = () => {
   

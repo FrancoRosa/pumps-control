@@ -1,7 +1,6 @@
 import { faPowerOff, faRedo } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { useEffect } from "react"
-import { useState } from "react/cjs/react.development"
+import { useEffect, useState } from "react"
 import { devicePowerOff, deviceRestart, getDeviceId } from "../api/api"
 
 const SystemConfig = () => {
