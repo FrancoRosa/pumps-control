@@ -16,6 +16,13 @@ def get_wifi_card():
     for text in info:
         if search('^wl', text):
             return text
+    info = check_output(['ip', 'link', 'show'])
+    lines = info.decode('ascii').split('\n')
+    lines.reverse()
+    for line in lines:
+        for text in line.split(': '):
+            if search('^wl', text):
+                return text
 
 
 def chunks(lst, n):
