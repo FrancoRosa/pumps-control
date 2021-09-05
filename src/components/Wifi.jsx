@@ -7,9 +7,8 @@ const Wifi = () => {
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
-    setInterval(() => {
-      setConnected(navigator.onLine)
-    }, 5*1000);
+    window.addEventListener('online', () => setConnected(true))
+    window.addEventListener('offline', () => setConnected(false))
   }, [])
 
   return (

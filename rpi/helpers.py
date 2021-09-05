@@ -17,11 +17,13 @@ def get_wifi_card():
         if search('^wl', text):
             return text
 
+
 def chunks(lst, n):
     return [lst[i:i + n] for i in range(0, len(lst), n)]
 
+
 def insert_dash(text, group_len):
-    return '-'.join(chunks(text,group_len))
+    return '-'.join(chunks(text, group_len))
 
 
 def get_device_id():
@@ -30,7 +32,7 @@ def get_device_id():
     for line in lines:
         if search('^Serial', line):
             serial = line.split(': ')[1]
-            return insert_dash(serial,4)
+            return insert_dash(serial, 4)
 
 
 def scan_wifi():
