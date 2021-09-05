@@ -6,6 +6,7 @@ PROJECT_DIR = '/home/pi/pumps-control'
 chdir(PROJECT_DIR)
 check_output('pwd')
 try:
+    check_output(['git', 'reset', '--hard'])
     check_output(['git', 'pull', 'origin', 'master'])
     print('...', ctime(), ': successfully updated')
 except:

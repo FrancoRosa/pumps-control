@@ -11,11 +11,14 @@ def device_shutdown():
 
 
 def get_wifi_card():
+    # If card is currently connected to network
     info = check_output(['ip', 'route', 'list'])
     info = info.decode('ascii').split(' ')
     for text in info:
         if search('^wl', text):
             return text
+
+    # If card is not connected to network
     info = check_output(['ip', 'link', 'show'])
     lines = info.decode('ascii').split('\n')
     lines.reverse()
