@@ -10,25 +10,25 @@
                 compatible = "gpio-keys";
                 #address-cells = <1>;
                 #size-cells = <0>;
-                button@4 {
+                button@0 {
                    label = "breadboard A";
                    linux,code = <30>;
-                   gpios = <&gpio 18 1>;
+                   gpios = <&gpio 0 1>;
                 };
-                button@17 {
+                button@5 {
                    label = "breadboard S";
                    linux,code = <31>;
-                   gpios = <&gpio 23 1>;
+                   gpios = <&gpio 5 1>;
                 };
-                button@27 {
+                button@6 {
                    label = "breadboard D";
                    linux,code = <32>;
-                   gpios = <&gpio 24 1>;
+                   gpios = <&gpio 6 1>;
                 };
-                button@22 {
+                button@13 {
                    label = "breadboard F";
                    linux,code = <33>;
-                   gpios = <&gpio 12 1>;
+                   gpios = <&gpio 13 1>;
                 };
              };
           };

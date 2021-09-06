@@ -54,6 +54,10 @@ In order to map GPIO push buttons to keyboard events that can interact with the 
 cd rpi
 sudo dtc -I dts -O dtb -o /boot/overlays/breadboard.dtbo breadboard.dts
 ```
+
+Finally the following line must be added to `/boot/config.txt:`
+`dtoverlay=breadboard`
+
 More information can be found here:
 - https://blog.geggus.net/2017/01/setting-up-a-gpio-button-keyboard-on-a-raspberry-pi/
 - https://www.raspberrypi.org/documentation/computers/configuration.html#device-trees-overlays-and-parameters
@@ -81,13 +85,13 @@ GPIO17|Output|Pump 2
 GPIO27|Output|Pump 3
 GPIO22|Output|Pump 4
 
-Buttons:
+UI Buttons:
 GPIO|MODE|DESCRIPTION
 -----|-----|-----
-GPIO0|Input|Button 1
-GPIO5|Input|Button 2
-GPIO6|Input|Button 3
-GPIO13|Input|Button 4
+GPIO0|Input A|Button 1
+GPIO5|Input S|Button 2
+GPIO6|Input D|Button 3
+GPIO13|Input F|Button 4
 
 ### Buttons configuration:
 To simulate the buttons actions on the react app, the useKey hook was used. Then you should configure the GPIO to work as a keyboard and match the KEYS used in the UI
