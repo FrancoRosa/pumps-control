@@ -19,9 +19,9 @@ const Notifications = () => {
   return (
     <>
       {notifications.map((notification, index) => 
-        <div class="notification is-warning" style={{top: `${-6 + index*5}em`}}>
+        <div className="notification is-warning" style={{top: `${-6 + index*5}em`}}>
           <button
-            class="delete is-large"
+            className="delete is-large"
             onClick={() => setNotifications(notifications.filter(t => t != notification))}/>
           <p className="pl-1 pr-1">{notification}</p>
         </div>

@@ -20,15 +20,19 @@ const Home = () => {
   const startRecipe = recipe => {
     // Update pumps time and pulses (calculating values)
     const newPumps = [...pumpsState]
-    setSelectedRecipe(recipe.name)
     newPumps.forEach((pump, index) => {
       pump.timeout = calibrations[recipe.id].config[index].timeout
       pump.pulses = calibrations[recipe.id].config[index].pulses
     })
     setPumpsState(newPumps)
-    newPumps.forEach(pump => {
-      startControlledPump(pump)
-    });
+    const totalTime = newPumps.reduce((s,p) => s + p.timeout, 0)
+    console.log('totaltime:', totalTime)
+    if (totalTime != 0) {
+      setSelectedRecipe(recipe.name)
+      newPumps.forEach(pump => {
+        startControlledPump(pump)
+      });
+    }
   }
 
   const stopRecipe = () => {
@@ -59,7 +63,7 @@ const Home = () => {
         <Notifications />
         <div className="columns">
           {recipes.map(recipe => (
-            <div className="column is-flex is-flex-centered">
+            <div key={recipe.id} className="column is-flex is-flex-centered">
               <div className="card is-flex-direction-column is-flex-centered home-card">
                 <a onClick={() => startRecipe(recipe)}>
                   <p className={`${selectedRecipe == recipe.name ? 'has-text-success' : 'has-text-grey'} title is-4 m-2 has-text-centered`}>{recipe.name}</p>

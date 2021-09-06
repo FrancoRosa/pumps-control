@@ -18,7 +18,7 @@ const PumpsStatus = () => {
         <div className="column is-half">
           <div className="columns">
             {pumps.map(pump => (
-              <div className="column">
+              <div key={pump.id}   className="column">
                 <h4 className={`heading has-text-centered ${pumpsState[pump.id].on ? 'has-text-danger': 'has-text-link'}`}>
                   {pump.name}
                 </h4>
@@ -32,7 +32,7 @@ const PumpsStatus = () => {
             ))}
           </div>
           <div className="div">
-            <progress class={`progress is-small ${working ? 'is-success': 'is-dark'}`} max="100" value={progress(pumpsState)}>
+            <progress className={`progress is-small ${working ? 'is-success': 'is-dark'}`} max="100" value={progress(pumpsState)}>
               %
             </progress>
           </div>

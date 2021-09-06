@@ -58,7 +58,7 @@ const WirelessConfig = () => {
       </div>
       <div className="is-flex is-flex-direction-column is-flex-centered m-4">
         <p className="heading has-text-centered has-text-link">Available Networks ({networkCard})</p>
-          <table class="table is-bordered is-striped is-narrow">
+          <table className="table is-bordered is-striped is-narrow">
           <thead>
             <tr>
               <th className="has-text-centered is-size-6">SSID</th>

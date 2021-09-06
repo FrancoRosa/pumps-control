@@ -25,10 +25,10 @@
                    linux,code = <32>;
                    gpios = <&gpio 6 1>;
                 };
-                button@13 {
+                button@26 {
                    label = "breadboard F";
                    linux,code = <33>;
-                   gpios = <&gpio 13 1>;
+                   gpios = <&gpio 26 1>;
                 };
              };
           };
