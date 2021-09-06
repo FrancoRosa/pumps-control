@@ -48,6 +48,15 @@ In order to display the application from boot the following steps are required:
 
 ```
 
+### GPIO to keyboard
+In order to map GPIO push buttons to keyboard events that can interact with the UI, it is necessary to load a dts file on the kernel `/rpi/breadboard.dts` 
+```BASH
+cd rpi
+sudo dtc -I dts -O dtb -o /boot/overlays/breadboard.dtbo breadboard.dts
+```
+ 
+
+
 ### Hardware Settings
 
 This version of the sofware uses the GPIO as stated bellow.
