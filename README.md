@@ -54,6 +54,9 @@ In order to map GPIO push buttons to keyboard events that can interact with the 
 cd rpi
 sudo dtc -I dts -O dtb -o /boot/overlays/breadboard.dtbo breadboard.dts
 ```
+More information can be found here:
+- https://blog.geggus.net/2017/01/setting-up-a-gpio-button-keyboard-on-a-raspberry-pi/
+- https://www.raspberrypi.org/documentation/computers/configuration.html#device-trees-overlays-and-parameters
  
 
 
