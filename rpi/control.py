@@ -7,6 +7,7 @@ from time import sleep, time
 from threading import Thread
 from os import uname
 from signal import pause
+from keyboard import press_and_release
 import json
 
 rpi = uname()[4] != 'x86_64'
@@ -43,8 +44,14 @@ MAX_TIME = 60*60
 
 def volume_counter():
     global pumps_config
+    
     gpios = ['GPIO18', 'GPIO23', 'GPIO24', 'GPIO12']
     buttons = [Button(18), Button(23), Button(24), Button(12)]
+    
+    key_gpios = ['GPIO6', 'GPIO13', 'GPIO19', 'GPIO26']
+    key_buttons = [Button(6), Button(13), Button(19), Button(26)]
+
+    key_map = ['a','s','d','f']
 
     def pulse_fc(button):
         id = gpios.index(str(button.pin))
@@ -61,9 +68,16 @@ def volume_counter():
 
         socketio.send(json.dumps(pump), broadcast=True)
 
+    def keyboard_fc(button):
+        id = key_gpios.index(str(button.pin))
+        press_and_release(key_map[id])
+
+
     for button in buttons:
         button.when_pressed = pulse_fc
-        button.when_released = pulse_fc
+    
+    for key in key_buttons:
+        key.when_pressed = keyboard_fc
 
     pause()
 
