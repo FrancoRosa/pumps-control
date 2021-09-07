@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getTimestamp } from "../js/helpers";
-import { startPump, stopPump } from "../api/api";
+import { startPump, stopPump, restartPump } from "../api/api";
 import { useStoreActions, useStoreState } from "easy-peasy";
 
 const CardManual = ({ pump, recipe }) => {
@@ -49,8 +49,12 @@ const CardManual = ({ pump, recipe }) => {
   }, [recipe])
 
   const startCount = () => {
-    setStart(getTimestamp())
-    startPump(pump).then(() => console.log('start pump'))
+    if (seconds == 0) {
+      startPump(pump).then(() => console.log('start pump'))
+    } else {
+      restartPump(pump).then(() => console.log('restart pump'))
+    }
+      setStart(getTimestamp())
     setRunning(true)
   }
 
@@ -95,7 +99,7 @@ const CardManual = ({ pump, recipe }) => {
             className="button mb-2 mt-2 pt-0 is-medium"
             onClick={running ? stopCount : startCount}
           >
-            {running ? 'Stop' : 'Start'}
+            {running ? 'Pause' : 'Start'}
           </button>
           <button
             className="button mb-2 mt-2 pt-0 is-medium"

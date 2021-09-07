@@ -23,6 +23,14 @@ export const startPump = async (pump) => {
   return response.data
 }
 
+export const restartPump = async (pump) => {
+  console.log('... restarting pump');
+  const {id} = pump
+  const url = `http://${host}:9999/api/restart/${id}`;
+  const response = await axios.post(url)
+  return response.data
+}
+
 export const stopPump = async (pump) => {
   console.log('... stop pump');
   const {id} = pump
