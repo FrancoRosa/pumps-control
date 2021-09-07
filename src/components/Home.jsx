@@ -42,7 +42,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    const filling = pumpsState.map(p => p.on).reduce((a,b) => a || b)
+    const filling = pumpsState.map(p => p.on).reduce((a,b) => a || b, false)
     if (working == true && filling == false) setSelectedRecipe(false)
     setWorking(filling)
   },[pumpsState])
