@@ -1,7 +1,5 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
 import { setSavedStorage } from "../js/helpers";
-import { useLocalStorage } from "../js/useLocalStorage";
-import InputVolume from "./InputVolume";
 
 const ToleranceConfig = () => {
 

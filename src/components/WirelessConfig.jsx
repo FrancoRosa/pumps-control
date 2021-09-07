@@ -9,11 +9,8 @@ const WirelessConfig = () => {
   const wifissid = useStoreState(state => state.wifissid)
   const setWifipass = useStoreActions(actions => actions.setWifipass)
   const setWifissid = useStoreActions(actions => actions.setWifissid)
-  const [focused, setFocused] = useState(false)
   const [networks, setNetworks] = useState([])
   const [networkCard, setNetworkCard] = useState(null)
-  const showKeyboard = () => setFocused(true)
-  const hideKeyboard = () => setFocused(false)
   
   useEffect(() => {
     deviceNetScan().then(res => setNetworks(res.networks))
@@ -74,8 +71,6 @@ const WirelessConfig = () => {
             ))}
           </tbody>
         </table>
-      </div>
-      <div className={`has-text-grey ${!focused && 'is-hidden'}`}>
       </div>
     </div>
   )
