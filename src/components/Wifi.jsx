@@ -8,6 +8,7 @@ const Wifi = () => {
   useEffect(() => {
     window.addEventListener('online', () => setConnected(true))
     window.addEventListener('offline', () => setConnected(false))
+    setConnected(navigator.onLine)
   }, [])
 
   return (
