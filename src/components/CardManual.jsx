@@ -7,9 +7,11 @@ const CardManual = ({ pump, recipe }) => {
   const calibrations = useStoreState(state => state.calibrations)
   const setCalibrations = useStoreActions(actions => actions.setCalibrations)
   const pumpsState = useStoreState(state => state.pumpsState)
+  const setPumpsState = useStoreActions(actions => actions.setPumpsState)
   const timeTolerance = useStoreState(state => state.timeTolerance)
   
   const [seconds, setSeconds] = useState(0)
+  const [lastSeconds, setLastSeconds] = useState(0)
   const [running, setRunning] = useState(false)
   const [start, setStart] = useState(getTimestamp())
   const [end, setEnd] = useState(getTimestamp())
@@ -22,7 +24,7 @@ const CardManual = ({ pump, recipe }) => {
     }, 100)
 
     return () => clearInterval(timer);
-  })
+  }, [])
 
   useEffect(() => {
     if (running) {
@@ -44,9 +46,17 @@ const CardManual = ({ pump, recipe }) => {
 
   useEffect(()=>{
     setSeconds(0)
+    setLastSeconds(0)
+    resetPulses()
     setPulsesPerUnit(calibrations[recipe.id].config[pump.id].pulses)
     setFillTimeout(calibrations[recipe.id].config[pump.id].timeout)
   }, [recipe])
+
+  const resetPulses = () => {
+    let tempState = [...pumpsState]
+    tempState[pump.id].pulses_count = 0
+    setPumpsState(tempState)
+  }
 
   const startCount = () => {
     if (seconds == 0) {
@@ -54,12 +64,13 @@ const CardManual = ({ pump, recipe }) => {
     } else {
       restartPump(pump).then(() => console.log('restart pump'))
     }
-      setStart(getTimestamp())
+      setStart(getTimestamp()-lastSeconds)
     setRunning(true)
   }
 
   const stopCount = () => {
     setEnd(getTimestamp())
+    setLastSeconds(seconds)
     stopPump(pump).then(() => console.log('stop pump'))
     setRunning(false)
   }
