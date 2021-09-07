@@ -152,6 +152,14 @@ def start_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
     pumps_config[id] = pump
     socketio.send(json.dumps(pump), broadcast=True)
 
+def restart_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
+    global pumps_config
+    pump = pumps_config[id]
+    pump['pulses'] = pulses
+    pump['timeout'] = timeout
+    pump['on'] = pulses != 0
+    pumps_config[id] = pump
+    socketio.send(json.dumps(pump), broadcast=True)
 
 def stop_pump(id):
     global pumps_config
@@ -204,6 +212,17 @@ def stop(id):
     response.headers["Content-Type"] = "application/json"
     return response
 
+
+@app.route('/api/restart/<id>', methods=['post'])
+def restart(id):
+    id = int(id)
+    restart_pump(id)
+    response = make_response(jsonify({
+        "id": id,
+        'total_pulses': pumps_config[id]['total_pulses']
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
 
 @app.route('/api/info/<id>')
 def info(id):
@@ -258,7 +277,7 @@ def getNetworkCardList():
 
 
 @app.route('/api/poweroff', methods=['POST'])
-def poweroff():
+def poweroff_endpoint():
     device_shutdown()
     response = make_response(jsonify({
         "message": True,
@@ -268,7 +287,7 @@ def poweroff():
 
 
 @app.route('/api/restart', methods=['POST'])
-def restart():
+def restart_endpoint():
     device_restart()
     response = make_response(jsonify({
         "message": True,
