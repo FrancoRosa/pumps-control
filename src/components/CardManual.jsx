@@ -77,6 +77,7 @@ const CardManual = ({ pump, recipe }) => {
 
   const resetCount = () => {
     setSeconds(0)
+    setLastSeconds(0)
     setFillTimeout(0)
     setPulsesPerUnit(0)
     stopPump(pump).then(() => console.log('stop pump'))
