@@ -78,6 +78,7 @@ GPIO24|Input|Flow sensor 3
 GPIO12|Input|Flow sensor 4
 
 Pump control:
+
 GPIO|MODE|DESCRIPTION
 -----|-----|-----
 GPIO4|Output|Pump 1
@@ -86,12 +87,13 @@ GPIO27|Output|Pump 3
 GPIO22|Output|Pump 4
 
 UI Buttons:
+
 GPIO|MODE|DESCRIPTION
 -----|-----|-----
-GPIO0|Input A|Button 1
-GPIO5|Input S|Button 2
-GPIO6|Input D|Button 3
-GPIO11|Input F|Button 4
+GPIO6|Input A|Button 1
+GPIO13|Input S|Button 2
+GPIO19|Input D|Button 3
+GPIO26|Input F|Button 4
 
 ### Buttons configuration:
 To simulate the buttons actions on the react app, the useKey hook was used. Then you should configure the GPIO to work as a keyboard and match the KEYS used in the UI
