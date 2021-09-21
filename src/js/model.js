@@ -82,7 +82,7 @@ const initial = {
   timeTolerance: 5,
   wifissid: "wifi name",
   wifipass: "wifi password",
-  server: "http://us-central1-decon7-admin.cloudfunctions.net/measurements",
+  server: "http://us-central1-decon7-admin.cloudfunctions.net",
 };
 
 const getSavedStorage = (key) => {

@@ -2,19 +2,64 @@ from subprocess import check_output
 from os import uname
 from re import search
 from datetime import datetime
+from requests import get
 import shelve
+
+from requests.exceptions import Timeout
+
+default_server = 'http://us-central1-decon7-admin.cloudfunctions.net'
+connection_server = 'http://google.com'
+
+
+def is_connected():
+    try:
+        get(connection_server, timeout=2)
+        return True
+    except Timeout:
+        return False
+
+
+print(is_connected())
 
 
 def getDate():
     return str(datetime.utcnow().date())
 
 
+def getTime():
+    return str(datetime.utcnow().time())
+
+
+def is_time(str):
+    current = getTime()
+    print(current.split('.')[0])
+    return str in current
+
+
 def save_record(values, date=getDate()):
     s = shelve.open('records.db')
-    try:
-        s[date] = values
-    finally:
-        s.close()
+    s[date] = values
+    s.close()
+
+
+def get_records():
+    s = shelve.open('records.db')
+    result = []
+    if len(s.keys()) > 0:
+        for key in s:
+            row = s[key]
+            row.insert(0, key)
+            result.append(row)
+    s.close()
+    return result
+
+
+def remove_records():
+    s = shelve.open('records.db')
+    if len(s.keys()) > 0:
+        for key in s:
+            s.pop(key)
+    s.close()
 
 
 def save_server(server):
@@ -29,8 +74,10 @@ def get_server():
     s = shelve.open('server.db')
     try:
         server = s['server']
-    finally:
-        s.close()
+    except:
+        s['server'] = default_server
+        server = default_server
+    s.close()
     return server
 
 
