@@ -95,6 +95,15 @@ GPIO13|Input S|Button 2
 GPIO19|Input D|Button 3
 GPIO26|Input F|Button 4
 
+Level:
+
+GPIO|DESCRIPTION
+-----|-----
+GPIO10|Reservoir 1
+GPIO09|Reservoir 2
+GPIO11|Reservoir 3
+GPIO0|Reservoir 4
+
 ### Buttons configuration:
 To simulate the buttons actions on the react app, the useKey hook was used. Then you should configure the GPIO to work as a keyboard and match the KEYS used in the UI
 
