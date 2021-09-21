@@ -1,5 +1,8 @@
-from subprocess import run, check_output
+from subprocess import check_output
+from os import uname
 from re import search
+
+is_rpi = uname()[4] != 'x86_64'
 
 
 def device_restart():

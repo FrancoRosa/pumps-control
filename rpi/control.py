@@ -1,4 +1,4 @@
-from helpers import device_restart, device_shutdown
+from helpers import device_restart, device_shutdown, is_rpi
 from helpers import get_device_id, get_wifi_card, network_conf, scan_wifi
 from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send
@@ -10,10 +10,50 @@ from signal import pause
 from keyboard import press_and_release
 import json
 
-rpi = uname()[4] != 'x86_64'
-
-if rpi:
+if is_rpi:
     from gpiozero import LED, Button
+    """
+    Hardware layout 
+    p: pumps - output
+    l: reservoir level sensor - input - pullup on ic
+    s: flow sensor - input - pullup on ic
+    k: ui control button - input - pullup on ic
+
+                3V3  (1) (2)  5V    
+              GPIO2  (3) (4)  5V    
+              GPIO3  (5) (6)  GND   
+        p1    GPIO4  (7) (8)  GPIO14
+                GND  (9) (10) GPIO15
+        p2    GPIO17 (11) (12) GPIO18  s1
+        p3    GPIO27 (13) (14) GND   
+        p4    GPIO22 (15) (16) GPIO23  s2 
+                 3V3 (17) (18) GPIO24  s3
+        l1    GPIO10 (19) (20) GND   
+        l2     GPIO9 (21) (22) GPIO25
+        l3    GPIO11 (23) (24) GPIO8 
+                 GND (25) (26) GPIO7 
+        l4     GPIO0 (27) (28) GPIO1 
+               GPIO5 (29) (30) GND   
+        k1     GPIO6 (31) (32) GPIO12  s4
+        k2    GPIO13 (33) (34) GND   
+        k3    GPIO19 (35) (36) GPIO16
+        k4    GPIO26 (37) (38) GPIO20
+                 GND (39) (40) GPIO21
+    """
+    # Pumps outputs
+    pumps = [LED(4), LED(17), LED(27), LED(22)]
+    # Flow sensor input
+    flow_gpios = ['GPIO18', 'GPIO23', 'GPIO24', 'GPIO12']
+    flow_buttons = [Button(18), Button(23), Button(24), Button(12)]
+    # Keyboard input
+    key_gpios = ['GPIO6', 'GPIO13', 'GPIO19', 'GPIO26']
+    key_buttons = [Button(6), Button(13), Button(19), Button(26)]
+    # Level sensor input
+    level_gpios = ['GPIO10', 'GPIO09', 'GPIO11', 'GPIO0']
+    level_buttons = [Button(10), Button(9), Button(11), Button(0)]
+
+MAX_PULSES = 1e3
+MAX_TIME = 60*60
 
 app = Flask(__name__)
 CORS(app)
@@ -33,28 +73,17 @@ pumps_config = [
      'time_count': 0, 'pulses': 18, 'pulses_count': 0},
 ]
 
-if rpi:
-    pumps = [LED(4), LED(17), LED(27), LED(22)]
-
-MAX_PULSES = 1e3
-MAX_TIME = 60*60
 
 # This manages sensor pulses
 
 
 def volume_counter():
     global pumps_config
-    
-    gpios = ['GPIO18', 'GPIO23', 'GPIO24', 'GPIO12']
-    buttons = [Button(18), Button(23), Button(24), Button(12)]
-    
-    key_gpios = ['GPIO6', 'GPIO13', 'GPIO19', 'GPIO26']
-    key_buttons = [Button(6), Button(13), Button(19), Button(26)]
 
-    key_map = ['a','s','d','f']
+    key_map = ['a', 's', 'd', 'f']
 
     def pulse_fc(button):
-        id = gpios.index(str(button.pin))
+        id = flow_gpios.index(str(button.pin))
 
         pump = pumps_config[id]
         pump['total_pulses'] += 1
@@ -72,10 +101,9 @@ def volume_counter():
         id = key_gpios.index(str(button.pin))
         press_and_release(key_map[id])
 
-
-    for button in buttons:
+    for button in flow_buttons:
         button.when_pressed = pulse_fc
-    
+
     for key in key_buttons:
         key.when_pressed = keyboard_fc
 
@@ -113,7 +141,7 @@ def send_status_debug():
         sleep(1)
 
 
-Thread(target=volume_counter if rpi else send_status_debug, args=[]).start()
+Thread(target=volume_counter if is_rpi else send_status_debug, args=[]).start()
 
 
 def time_counter():
@@ -121,7 +149,7 @@ def time_counter():
     time_step = 0.1
 
     while True:
-        if rpi:
+        if is_rpi:
             for i, pump in enumerate(pumps):
                 pump.on() if pumps_config[i]['on'] else pump.off()
 
@@ -152,6 +180,7 @@ def start_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
     pumps_config[id] = pump
     socketio.send(json.dumps(pump), broadcast=True)
 
+
 def restart_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
     global pumps_config
     pump = pumps_config[id]
@@ -160,6 +189,7 @@ def restart_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
     pump['on'] = pulses != 0
     pumps_config[id] = pump
     socketio.send(json.dumps(pump), broadcast=True)
+
 
 def stop_pump(id):
     global pumps_config
@@ -224,6 +254,7 @@ def restart(id):
     response.headers["Content-Type"] = "application/json"
     return response
 
+
 @app.route('/api/info/<id>')
 def info(id):
     id = int(id)
@@ -266,6 +297,7 @@ def getDeviceId():
     response.headers["Content-Type"] = "application/json"
     return response
 
+
 @app.route('/api/network/scan')
 def getNetworkCardList():
     networks = scan_wifi()
@@ -289,6 +321,18 @@ def poweroff_endpoint():
 @app.route('/api/restart', methods=['POST'])
 def restart_endpoint():
     device_restart()
+    response = make_response(jsonify({
+        "message": True,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/set_server', methods=['POST'])
+def set_server():
+    print('new_server set!!!!!!!!!!')
+    print('new_server set!!!!!!!!!!')
+    print('new_server set!!!!!!!!!!')
     response = make_response(jsonify({
         "message": True,
     }), 200)
