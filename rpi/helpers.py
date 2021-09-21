@@ -1,6 +1,38 @@
 from subprocess import check_output
 from os import uname
 from re import search
+from datetime import datetime
+import shelve
+
+
+def getDate():
+    return str(datetime.utcnow().date())
+
+
+def save_record(values, date=getDate()):
+    s = shelve.open('records.db')
+    try:
+        s[date] = values
+    finally:
+        s.close()
+
+
+def save_server(server):
+    s = shelve.open('server.db')
+    try:
+        s['server'] = server
+    finally:
+        s.close()
+
+
+def get_server():
+    s = shelve.open('server.db')
+    try:
+        server = s['server']
+    finally:
+        s.close()
+    return server
+
 
 is_rpi = uname()[4] != 'x86_64'
 
