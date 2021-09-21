@@ -1,5 +1,6 @@
 from helpers import device_restart, device_shutdown, is_rpi
 from helpers import get_device_id, get_wifi_card, network_conf, scan_wifi
+from remote_helpers import is_time, cloud_backup, get_pulses, save_pulses, timestamp
 from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send
 from flask_cors import CORS
@@ -61,19 +62,43 @@ app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 port = 9999
-
+records = get_records()  # From persistent storage
 pumps_config = [
-    {'id': 0, 'total_pulses': 123, 'on': False, 'timeout': 20,
-        'time_count': 0, 'pulses': 10, 'pulses_count': 0},
-    {'id': 1, 'total_pulses': 323, 'on': False, 'timeout': 15,
-     'time_count': 0, 'pulses': 13, 'pulses_count': 0},
-    {'id': 2, 'total_pulses': 123, 'on': False, 'timeout': 5,
-     'time_count': 0, 'pulses': 15, 'pulses_count': 0},
-    {'id': 3, 'total_pulses': 223, 'on': False, 'timeout': 10,
-     'time_count': 0, 'pulses': 18, 'pulses_count': 0},
+    {
+        'id': 0, 'total_pulses': records[0], 'on': False, 'timeout': 1,
+        'time_count': 0, 'pulses': 10, 'pulses_count': 0
+    },
+    {
+        'id': 1, 'total_pulses': records[1], 'on': False, 'timeout': 1,
+        'time_count': 0, 'pulses': 13, 'pulses_count': 0
+    },
+    {
+        'id': 2, 'total_pulses': records[2], 'on': False, 'timeout': 1,
+        'time_count': 0, 'pulses': 15, 'pulses_count': 0
+    },
+    {
+        'id': 3, 'total_pulses': records[3], 'on': False, 'timeout': 1,
+        'time_count': 0, 'pulses': 18, 'pulses_count': 0
+    },
 ]
 
 
+notification = {
+    "message": "",
+    "timestamp": timestamp(),
+}
+
+
+def save_notification(message):
+    global notification
+    notification = {
+        "message": message,
+        "timestamp": timestamp(),
+    }
+
+
+def total_pulses():
+    return list(map(lambda x: x['total_pulses'], pumps_config))
 # This manages sensor pulses
 
 
@@ -119,6 +144,7 @@ def send_status_debug():
                     pump['on'] = False
                     pump['pulses_count'] = 0
                     pump['time_count'] = 0
+                    save_pulses(get_pulses)
                     socketio.send(json.dumps({
                         'id': pump['id'],
                         'pulses_count': pump['pulses_count'],
@@ -161,12 +187,25 @@ def time_counter():
                     pump['time_count'] = round(pump['time_count'], 1)
                     print('... time stopping pump', pump['id'])
                     pump['on'] = False
+                    save_pulses()
+                    save_notification('Check pump %d'(pump['id']+1))
                     socketio.send(json.dumps(pump), broadcast=True)
 
         sleep(time_step)
 
 
 Thread(target=time_counter, args=[]).start()
+
+
+def send_report():
+    while True:
+        if is_time('15:00:00'):
+            reservoirs = [level.value for level in level_buttons]
+            cloud_backup(total_pulses(), notification, reservoirs)
+        sleep(1)
+
+
+Thread(target=send_report, args=[]).start()
 
 
 def start_pump(id, pulses=MAX_PULSES, timeout=MAX_TIME):
@@ -195,6 +234,7 @@ def stop_pump(id):
     global pumps_config
     pump = pumps_config[id]
     pump['on'] = False
+    save_pulses(total_pulses())
     pumps_config[id] = pump
     socketio.send(json.dumps(pump), broadcast=True)
 
@@ -310,6 +350,7 @@ def getNetworkCardList():
 
 @app.route('/api/poweroff', methods=['POST'])
 def poweroff_endpoint():
+    save_pulses(total_pulses)
     device_shutdown()
     response = make_response(jsonify({
         "message": True,
@@ -320,6 +361,7 @@ def poweroff_endpoint():
 
 @app.route('/api/restart', methods=['POST'])
 def restart_endpoint():
+    save_pulses(total_pulses)
     device_restart()
     response = make_response(jsonify({
         "message": True,
