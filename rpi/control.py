@@ -62,22 +62,22 @@ app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 port = 9999
-records = get_records()  # From persistent storage
+pulses = get_pulses()  # From persistent storage
 pumps_config = [
     {
-        'id': 0, 'total_pulses': records[0], 'on': False, 'timeout': 1,
+        'id': 0, 'total_pulses': pulses[0], 'on': False, 'timeout': 1,
         'time_count': 0, 'pulses': 10, 'pulses_count': 0
     },
     {
-        'id': 1, 'total_pulses': records[1], 'on': False, 'timeout': 1,
+        'id': 1, 'total_pulses': pulses[1], 'on': False, 'timeout': 1,
         'time_count': 0, 'pulses': 13, 'pulses_count': 0
     },
     {
-        'id': 2, 'total_pulses': records[2], 'on': False, 'timeout': 1,
+        'id': 2, 'total_pulses': pulses[2], 'on': False, 'timeout': 1,
         'time_count': 0, 'pulses': 15, 'pulses_count': 0
     },
     {
-        'id': 3, 'total_pulses': records[3], 'on': False, 'timeout': 1,
+        'id': 3, 'total_pulses': pulses[3], 'on': False, 'timeout': 1,
         'time_count': 0, 'pulses': 18, 'pulses_count': 0
     },
 ]
@@ -188,7 +188,7 @@ def time_counter():
                     print('... time stopping pump', pump['id'])
                     pump['on'] = False
                     save_pulses()
-                    save_notification('Check pump %d'(pump['id']+1))
+                    save_notification('Check pump %d' % (pump['id']+1))
                     socketio.send(json.dumps(pump), broadcast=True)
 
         sleep(time_step)

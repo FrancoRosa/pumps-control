@@ -26,10 +26,6 @@ def getTime():
     return str(datetime.utcnow().time())
 
 
-def getTime():
-    return str(datetime.utcnow().time())
-
-
 def timestamp():
     return int(time())
 
@@ -40,14 +36,14 @@ def is_time(str):
 
 
 def save_record(values, date=getDate()):
-    s = open('records.db')
+    s = open('db/records.db')
     s[date] = values
     s.close()
 
 
 def get_records():
-    s = open('records.db')
-    result = [0, 0, 0, 0]
+    s = open('db/records.db')
+    result = []
     if len(s.keys()) > 0:
         for key in s:
             row = s[key]
@@ -58,7 +54,7 @@ def get_records():
 
 
 def remove_records():
-    s = open('records.db')
+    s = open('db/records.db')
     if len(s.keys()) > 0:
         for key in s:
             s.pop(key)
@@ -66,7 +62,7 @@ def remove_records():
 
 
 def save_server(server):
-    s = open('server.db')
+    s = open('db/server.db')
     try:
         s['server'] = server
     finally:
@@ -74,7 +70,7 @@ def save_server(server):
 
 
 def get_server():
-    s = open('server.db')
+    s = open('db/server.db')
     try:
         server = s['server']
     except:
@@ -85,7 +81,7 @@ def get_server():
 
 
 def save_pulses(pulses):
-    s = open('pulses.db')
+    s = open('db/pulses.db')
     try:
         s['pulses'] = pulses
     finally:
@@ -93,11 +89,11 @@ def save_pulses(pulses):
 
 
 def get_pulses():
-    s = open('pulses.db')
+    s = open('db/pulses.db')
     try:
         pulses = s['pulses']
     except:
-        s['server'] = [0, 0, 0, 0]
+        s['pulses'] = [0, 0, 0, 0]
         pulses = [0, 0, 0, 0]
     s.close()
     return pulses
