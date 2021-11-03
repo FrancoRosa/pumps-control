@@ -36,7 +36,6 @@ def timestamp():
 
 def is_time(str):
     current = getTime()
-    print(current.split('.')[0])
     return str in current
 
 
@@ -48,7 +47,7 @@ def save_record(values, date=getDate()):
 
 def get_records():
     s = open('records.db')
-    result = []
+    result = [0, 0, 0, 0]
     if len(s.keys()) > 0:
         for key in s:
             row = s[key]
