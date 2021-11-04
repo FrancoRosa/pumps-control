@@ -1,3 +1,5 @@
+import { faStopwatch, faVial } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useStoreState } from "easy-peasy";
 import { useEffect, useState } from "react";
 import { percent, progress } from "../js/helpers";
@@ -19,13 +21,13 @@ const PumpsStatus = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(Date());
-    }, 500);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     if (working) {
-      setCurrentTime(currentTime + 0.5);
+      setCurrentTime(currentTime + 1);
     } else {
       setCurrentTime(0);
     }
@@ -59,7 +61,7 @@ const PumpsStatus = () => {
             </div>
           ))}
         </div>
-        <div className="div">
+        <div className="is-flex">
           <progress
             className={`progress is-small ${
               working ? "is-success" : "is-dark"
@@ -67,12 +69,21 @@ const PumpsStatus = () => {
             max="100"
             value={progress(pumpsState)}
           />
+          <FontAwesomeIcon icon={faVial} className="ml-4" pulse={working} />
+        </div>
+
+        <div className="is-flex m-0">
           <progress
             className={`progress md-0 p-0 mt-0 is-small ${
               working ? "is-success" : "is-dark"
             }`}
             max={maxTime}
             value={currentTime}
+          />
+          <FontAwesomeIcon
+            icon={faStopwatch}
+            className="ml-4"
+            pulse={working}
           />
         </div>
       </div>
