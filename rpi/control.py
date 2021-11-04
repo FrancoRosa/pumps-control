@@ -9,6 +9,8 @@ from threading import Thread
 from signal import pause
 from keyboard import press_and_release
 import json
+import logging
+
 
 if is_rpi:
     from gpiozero import LED, Button
@@ -56,6 +58,8 @@ MAX_PULSES = 1e3
 MAX_TIME = 60*60
 
 app = Flask(__name__)
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 CORS(app)
 app.config['SECRET_KEY'] = 'secret'
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -201,7 +205,7 @@ def send_report():
             is_time('8:00:00')
             or is_time('12:00:00')
             or is_time('15:00:00')
-            or is_time('18:00:00')
+            or is_time('16:20:00')
             or is_time('22:00:00')
         ):
             reservoirs = [level.value for level in level_buttons]
