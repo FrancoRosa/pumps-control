@@ -69,9 +69,12 @@ const PumpsStatus = () => {
             max="100"
             value={progress(pumpsState)}
           />
-          <FontAwesomeIcon icon={faVial} className="ml-4" pulse={working} />
+          <FontAwesomeIcon
+            icon={faVial}
+            className={"ml-4 " + (working || "has-text-dark")}
+            pulse={working}
+          />
         </div>
-
         <div className="is-flex m-0">
           <progress
             className={`progress md-0 p-0 mt-0 is-small ${
@@ -82,7 +85,7 @@ const PumpsStatus = () => {
           />
           <FontAwesomeIcon
             icon={faStopwatch}
-            className="ml-4"
+            className={"ml-4 " + (working || "has-text-dark")}
             pulse={working}
           />
         </div>

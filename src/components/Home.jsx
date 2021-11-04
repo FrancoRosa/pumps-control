@@ -95,14 +95,14 @@ const Home = () => {
                 <p
                   className={`${
                     working ? "has-text-danger" : "has-text-grey"
-                  } title is-4 m-4 has-text-centered`}
+                  } title is-4 m-2 has-text-centered`}
                 >
                   Stop
                 </p>
                 <div
                   className={`${
                     working ? "has-text-danger" : "has-text-grey"
-                  } title is-1 has-text-centered m-4`}
+                  } title is-1 has-text-centered m-3`}
                 >
                   <FontAwesomeIcon icon={faHandPaper} />
                 </div>
