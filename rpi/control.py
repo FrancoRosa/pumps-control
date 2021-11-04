@@ -142,7 +142,7 @@ def send_status_debug():
                     pump['on'] = False
                     pump['pulses_count'] = 0
                     pump['time_count'] = 0
-                    save_pulses(get_pulses)
+                    save_pulses(get_pulses())
                     socketio.send(json.dumps({
                         'id': pump['id'],
                         'pulses_count': pump['pulses_count'],
@@ -185,7 +185,7 @@ def time_counter():
                     pump['time_count'] = round(pump['time_count'], 1)
                     print('... time stopping pump', pump['id'])
                     pump['on'] = False
-                    save_pulses()
+                    save_pulses(total_pulses())
                     save_notification('Check pump %d' % (pump['id']+1))
                     socketio.send(json.dumps(pump), broadcast=True)
 
@@ -354,7 +354,7 @@ def getNetworkCardList():
 
 @app.route('/api/poweroff', methods=['POST'])
 def poweroff_endpoint():
-    save_pulses(total_pulses)
+    save_pulses(total_pulses())
     device_shutdown()
     response = make_response(jsonify({
         "message": True,
@@ -365,7 +365,7 @@ def poweroff_endpoint():
 
 @app.route('/api/restart', methods=['POST'])
 def restart_endpoint():
-    save_pulses(total_pulses)
+    save_pulses(total_pulses())
     device_restart()
     response = make_response(jsonify({
         "message": True,
