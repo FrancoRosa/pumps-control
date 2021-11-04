@@ -6,7 +6,6 @@ from flask_socketio import SocketIO, send
 from flask_cors import CORS
 from time import sleep, time
 from threading import Thread
-from os import uname
 from signal import pause
 from keyboard import press_and_release
 import json
@@ -99,7 +98,6 @@ def save_notification(message):
 
 def total_pulses():
     return list(map(lambda x: x['total_pulses'], pumps_config))
-# This manages sensor pulses
 
 
 def volume_counter():
@@ -199,7 +197,13 @@ Thread(target=time_counter, args=[]).start()
 
 def send_report():
     while True:
-        if is_time('15:00:00'):
+        if (
+            is_time('8:00:00')
+            or is_time('12:00:00')
+            or is_time('15:00:00')
+            or is_time('18:00:00')
+            or is_time('22:00:00')
+        ):
             reservoirs = [level.value for level in level_buttons]
             cloud_backup(total_pulses(), notification, reservoirs)
         sleep(1)
