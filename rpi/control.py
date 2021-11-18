@@ -27,7 +27,7 @@
                  GND (39) (40) GPIO21
 """
 
-from helpers import device_restart, device_shutdown, is_rpi
+from helpers import device_restart, device_shutdown, is_rpi, get_commit
 from helpers import get_device_id, get_wifi_card, network_conf, scan_wifi
 from remote_helpers import is_time, cloud_backup, get_pulses, save_pulses, timestamp, get_records
 from flask import Flask, request, jsonify, make_response
@@ -370,6 +370,16 @@ def getDeviceId():
     serial = get_device_id()
     response = make_response(jsonify({
         "id": serial,
+    }), 200)
+    response.headers["Content-Type"] = "application/json"
+    return response
+
+
+@app.route('/api/commit')
+def getCommit():
+    commit = get_commit()
+    response = make_response(jsonify({
+        "commit": commit,
     }), 200)
     response.headers["Content-Type"] = "application/json"
     return response

@@ -65,6 +65,13 @@ export const getDeviceId = async () => {
   return response.data;
 };
 
+export const getLastCommit = async () => {
+  console.log("... getting device commit");
+  const url = `${host}/api/commit`;
+  const response = await axios.get(url);
+  return response.data;
+};
+
 export const updateNetwork = async (ssid, pass) => {
   console.log("... configure wifi");
   const url = `${host}/api/network`;

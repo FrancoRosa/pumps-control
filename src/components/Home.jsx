@@ -19,25 +19,34 @@ const Home = () => {
 
   const startRecipe = (recipe) => {
     // Update pumps time and pulses (calculating values)
-    const newPumps = [...pumpsState];
-    newPumps.forEach((pump, index) => {
-      pump.timeout = calibrations[recipe.id].config[index].timeout;
-      pump.pulses = calibrations[recipe.id].config[index].pulses;
+    const stopPromises = [];
+    pumpsState.forEach((pump) => {
+      stopPromises.push(stopPump(pump));
     });
-    setPumpsState(newPumps);
-    const totalTime = newPumps.reduce((s, p) => s + p.timeout, 0);
-    console.log("totaltime:", totalTime);
-    if (totalTime != 0) {
-      setSelectedRecipe(recipe.name);
-      newPumps.forEach((pump) => {
-        startControlledPump(pump);
+    Promise.all(stopPromises).then(() => {
+      const newPumps = [...pumpsState];
+      newPumps.forEach((pump, index) => {
+        pump.timeout = calibrations[recipe.id].config[index].timeout;
+        pump.pulses = calibrations[recipe.id].config[index].pulses;
       });
-    }
+      setPumpsState(newPumps);
+      const totalTime = newPumps.reduce((s, p) => s + p.timeout, 0);
+      if (totalTime != 0) {
+        setSelectedRecipe(recipe.name);
+        newPumps.forEach((pump) => {
+          startControlledPump(pump);
+        });
+      }
+    });
   };
 
   const stopRecipe = () => {
+    const promises = [];
     pumpsState.forEach((pump) => {
-      stopPump(pump);
+      promises.push(stopPump(pump));
+    });
+    Promise.all(promises).then(() => {
+      setSelectedRecipe("");
     });
   };
 

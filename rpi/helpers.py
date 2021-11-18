@@ -48,6 +48,10 @@ def get_device_id():
             return insert_dash(serial, 4)
 
 
+def get_commit():
+    return check_output(['git', 'log', "--pretty=format:'%h'", '-n', '1'])
+
+
 def scan_wifi():
     card = get_wifi_card()
     command_output = check_output(['iwlist', card, 'scan'])
