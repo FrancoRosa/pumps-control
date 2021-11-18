@@ -1,3 +1,32 @@
+"""
+    Hardware layout 
+    p: pumps - output
+    l: reservoir level sensor - input - pullup on ic
+    s: flow sensor - input - pullup on ic
+    k: ui control button - input - pullup on ic
+
+                3V3  (1) (2)  5V    
+              GPIO2  (3) (4)  5V    
+              GPIO3  (5) (6)  GND   
+        p1    GPIO4  (7) (8)  GPIO14
+                GND  (9) (10) GPIO15
+        p2    GPIO17 (11) (12) GPIO18  s1
+        p3    GPIO27 (13) (14) GND   
+        p4    GPIO22 (15) (16) GPIO23  s2 
+                 3V3 (17) (18) GPIO24  s3
+        l1    GPIO10 (19) (20) GND   
+        l2     GPIO9 (21) (22) GPIO25
+        l3    GPIO11 (23) (24) GPIO8 
+                 GND (25) (26) GPIO7 
+        l4     GPIO0 (27) (28) GPIO1 
+               GPIO5 (29) (30) GND   
+        k1     GPIO6 (31) (32) GPIO12  s4
+        k2    GPIO13 (33) (34) GND   
+        k3    GPIO19 (35) (36) GPIO16
+        k4    GPIO26 (37) (38) GPIO20
+                 GND (39) (40) GPIO21
+"""
+
 from helpers import device_restart, device_shutdown, is_rpi
 from helpers import get_device_id, get_wifi_card, network_conf, scan_wifi
 from remote_helpers import is_time, cloud_backup, get_pulses, save_pulses, timestamp, get_records
@@ -380,9 +409,7 @@ def restart_endpoint():
 
 @app.route('/api/set_server', methods=['POST'])
 def set_server():
-    print('new_server set!!!!!!!!!!')
-    print('new_server set!!!!!!!!!!')
-    print('new_server set!!!!!!!!!!')
+    print('TO DO: REDICRECT TO SERVER')
     response = make_response(jsonify({
         "message": True,
     }), 200)
