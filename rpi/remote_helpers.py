@@ -5,9 +5,14 @@ from time import time
 from json import dumps
 from shelve import open
 from helpers import get_device_id, is_rpi
+from os import path
 
 default_server = 'https://us-central1-decon7-admin.cloudfunctions.net'
 connection_server = 'http://google.com'
+project_dir = path.dirname(__file__)
+records_file = project_dir + '/db/records.db'
+server_file = project_dir + '/db/server.db'
+pulses_file = project_dir + '/db/pulses.db'
 
 
 def is_connected():
@@ -36,13 +41,13 @@ def is_time(str):
 
 
 def save_record(values, date=getDate()):
-    s = open('db/records.db')
+    s = open(records_file)
     s[date] = values
     s.close()
 
 
 def get_records():
-    s = open('db/records.db')
+    s = open(records_file)
     result = []
     if len(s.keys()) > 0:
         for key in s:
@@ -54,7 +59,7 @@ def get_records():
 
 
 def remove_records():
-    s = open('db/records.db')
+    s = open(records_file)
     if len(s.keys()) > 0:
         for key in s:
             s.pop(key)
@@ -62,7 +67,7 @@ def remove_records():
 
 
 def save_server(server):
-    s = open('db/server.db')
+    s = open(server_file)
     try:
         s['server'] = server
     finally:
@@ -70,7 +75,7 @@ def save_server(server):
 
 
 def get_server():
-    s = open('db/server.db')
+    s = open(server_file)
     try:
         server = s['server']
     except:
@@ -81,7 +86,7 @@ def get_server():
 
 
 def save_pulses(pulses):
-    s = open('db/pulses.db')
+    s = open(pulses_file)
     try:
         s['pulses'] = pulses
     finally:
@@ -89,7 +94,7 @@ def save_pulses(pulses):
 
 
 def get_pulses():
-    s = open('db/pulses.db')
+    s = open(pulses_file)
     try:
         pulses = s['pulses']
     except:
