@@ -271,6 +271,7 @@ def stop_pump(id):
     global pumps_config
     pump = pumps_config[id]
     pump['on'] = False
+    pump['time_count'] = 0
     save_pulses(total_pulses())
     pumps_config[id] = pump
     socketio.send(json.dumps(pump), broadcast=True)

@@ -6,6 +6,7 @@ const RecipeConfig = () => {
   const setRecipes = useStoreActions((actions) => actions.setRecipes);
 
   const handleNameChange = (id, name) => {
+    console.log("bip");
     setRecipes(
       recipes.map((recipe) => (recipe.id == id ? { ...recipe, name } : recipe))
     );

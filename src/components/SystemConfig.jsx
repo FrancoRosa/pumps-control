@@ -27,7 +27,7 @@ const SystemConfig = () => {
           <div className="columns">
             <div
               onClick={devicePowerOff}
-              className="column is-flex is-flex-centered is-flex-direction-column"
+              className="pointer column is-flex is-flex-centered is-flex-direction-column"
             >
               <FontAwesomeIcon
                 icon={faPowerOff}
@@ -37,7 +37,7 @@ const SystemConfig = () => {
             </div>
             <div
               onClick={deviceRestart}
-              className="column is-flex is-flex-centered is-flex-direction-column"
+              className="pointer column is-flex is-flex-centered is-flex-direction-column"
             >
               <FontAwesomeIcon
                 icon={faRedo}

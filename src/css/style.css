@@ -79,6 +79,10 @@
   cursor: pointer;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .notification {
   position: absolute;
   right: -1em;
