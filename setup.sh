@@ -55,7 +55,18 @@ install_dependency "serve" "sudo npm i -g serve"
 cd /home/pi
 git clone https://github.com/FrancoRosa/pumps-control.git
 
+#install pip3 dependencies
+sudo pip3 install flask-cors flask-socketio keyboard
 
+#Setup pm2
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u pi --hp /home/pi
+sudo pm2 startup
+sudo pm2 serve /home/pi/pumps-control/build 8080 --name 'web'
+sudo pm2 start /home/pi/pumps-control/rpi/control.py --name "control" --interpreter python3
+sudo pm2 save
+
+pm2 start /home/pi/pumps-control/rpi/update.py --name "update" --interpreter python3
+pm2 save
 
 while true; do
     read -p "Do you wish to reboot? (y/n) " yn
