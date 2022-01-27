@@ -1,6 +1,6 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { setApiServer } from "../api/api";
-import { setSavedStorage } from "../js/helpers";
+import { setApiServer } from "../../api/api";
+import { setSavedStorage } from "../../js/helpers";
 
 const RemoteConfig = () => {
   const server = useStoreState((state) => state.server);

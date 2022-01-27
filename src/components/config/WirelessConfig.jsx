@@ -1,6 +1,6 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { deviceNetCard, deviceNetScan, updateNetwork } from "../api/api";
-import { setSavedStorage } from "../js/helpers";
+import { deviceNetCard, deviceNetScan, updateNetwork } from "../../api/api";
+import { setSavedStorage } from "../../js/helpers";
 import { useState, useEffect } from "react";
 
 const WirelessConfig = () => {

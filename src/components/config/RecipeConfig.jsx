@@ -1,5 +1,5 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { setSavedStorage } from "../js/helpers";
+import { setSavedStorage } from "../../js/helpers";
 
 const RecipeConfig = () => {
   const recipes = useStoreState((state) => state.recipes);

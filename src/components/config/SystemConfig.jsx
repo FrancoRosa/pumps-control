@@ -6,7 +6,7 @@ import {
   deviceRestart,
   getDeviceId,
   getLastCommit,
-} from "../api/api";
+} from "../../api/api";
 
 const SystemConfig = () => {
   const [id, setId] = useState("");
