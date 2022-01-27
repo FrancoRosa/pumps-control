@@ -89,7 +89,7 @@ const getSavedStorage = (key) => {
   return JSON.parse(window.localStorage.getItem(key)) || initial[key];
 };
 
-export default {
+const model = {
   recipes: getSavedStorage("recipes"),
   setRecipes: action((state, recipes) => {
     state.recipes = [...recipes];
@@ -135,3 +135,5 @@ export default {
     state.pumpMessage = message;
   }),
 };
+
+export default model;

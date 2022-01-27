@@ -16,12 +16,12 @@ const Notifications = () => {
         console.log("timeout:", timeout, "time_count:", time_count);
         setNotifications([...notifications, `Check ${pumps[id].name} pump`]);
         setPumpsState(
-          pumpsState.map((p) => (p.id == id ? { ...p, time_count: 0 } : p))
+          pumpsState.map((p) => (p.id === id ? { ...p, time_count: 0 } : p))
         );
         setPumpMessage({ ...pumpMessage, time_count: 0 });
       }
     }
-  }, [on, id]);
+  }, [on, id]); // eslint-disable-line
 
   return (
     <>
@@ -33,7 +33,7 @@ const Notifications = () => {
           <button
             className="delete is-large"
             onClick={() =>
-              setNotifications(notifications.filter((t) => t != notification))
+              setNotifications(notifications.filter((t) => t !== notification))
             }
           />
           <p className="pl-1 pr-1">{notification}</p>

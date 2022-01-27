@@ -1,30 +1,29 @@
-import { useStoreState } from "easy-peasy"
-import { useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { capitalize } from "../js/helpers"
+import { useStoreState } from "easy-peasy";
+import { Link } from "react-router-dom";
+import { capitalize } from "../js/helpers";
 
-const CalibrateNavigation = ( {selection, setSelection }) => {
-  
-  const recipes = useStoreState(state => state.recipes)
+const CalibrateNavigation = ({ selection, setSelection }) => {
+  const recipes = useStoreState((state) => state.recipes);
 
   return (
     <div className="menu column is-one-fifth">
       <p className="menu-label has-text-link">
-        <a>Recipes</a>
+        <p>Recipes</p>
       </p>
       <ul className="menu-list">
-        {recipes.map(recipe => (
+        {recipes.map((recipe) => (
           <li>
-            <Link 
-              className={recipe==selection && 'is-active'} 
-              onClick={() => setSelection(recipe)}>
-                {capitalize(recipe.name)}
+            <Link
+              className={recipe === selection && "is-active"}
+              onClick={() => setSelection(recipe)}
+            >
+              {capitalize(recipe.name)}
             </Link>
-          </li>  
+          </li>
         ))}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default CalibrateNavigation
+export default CalibrateNavigation;

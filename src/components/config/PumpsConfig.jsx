@@ -6,7 +6,7 @@ const PumpsConfig = () => {
   const setPumps = useStoreActions((actions) => actions.setPumps);
 
   const handleNameChange = (id, name) => {
-    setPumps(pumps.map((pump) => (pump.id == id ? { ...pump, name } : pump)));
+    setPumps(pumps.map((pump) => (pump.id === id ? { ...pump, name } : pump)));
   };
 
   return (

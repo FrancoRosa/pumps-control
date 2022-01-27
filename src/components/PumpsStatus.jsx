@@ -31,7 +31,7 @@ const PumpsStatus = () => {
     } else {
       setCurrentTime(0);
     }
-  }, [time]);
+  }, [time]); // eslint-disable-line
 
   return (
     <div className="columns">
@@ -47,7 +47,7 @@ const PumpsStatus = () => {
               >
                 {pump.name}
               </h4>
-              {pumpsState[pump.id].timeout != 0 ? (
+              {pumpsState[pump.id].timeout !== 0 ? (
                 <p className="has-text-centered">
                   {percent(
                     pumpsState[pump.id].pulses_count,

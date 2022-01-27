@@ -1,11 +1,10 @@
 import { useStoreActions, useStoreState } from "easy-peasy";
-import { startControlledPump, stopPump } from "../api/api";
-import { useLocalStorage } from "../js/useLocalStorage";
+import { useEffect, useState } from "react";
 import { faVial, faHandPaper } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { startControlledPump, stopPump } from "../api/api";
 import logo from "../assets/logo.png";
 import PumpsStatus from "./PumpsStatus";
-import { useEffect, useState } from "react";
 import Notifications from "./Notifications";
 import useKey from "../js/useKey";
 
@@ -31,7 +30,7 @@ const Home = () => {
       });
       setPumpsState(newPumps);
       const totalTime = newPumps.reduce((s, p) => s + p.timeout, 0);
-      if (totalTime != 0) {
+      if (totalTime !== 0) {
         setSelectedRecipe(recipe.name);
         newPumps.forEach((pump) => {
           startControlledPump(pump);
@@ -52,9 +51,9 @@ const Home = () => {
 
   useEffect(() => {
     const filling = pumpsState.map((p) => p.on).reduce((a, b) => a || b, false);
-    if (working == true && filling == false) setSelectedRecipe(false);
+    if (working === true && filling === false) setSelectedRecipe(false);
     setWorking(filling);
-  }, [pumpsState]);
+  }, [pumpsState]); // eslint-disable-line
 
   useKey("KeyA", () => startRecipe(recipes[0]));
   useKey("KeyS", () => startRecipe(recipes[1]));
@@ -64,7 +63,7 @@ const Home = () => {
   return (
     <>
       <div className="is-flex is-flex-centered">
-        <img src={logo} className="logo mb-2" />
+        <img src={logo} className="logo mb-2" alt="Decon7 logo" />
       </div>
       <div className="container ">
         <PumpsStatus />
@@ -73,10 +72,10 @@ const Home = () => {
           {recipes.map((recipe) => (
             <div key={recipe.id} className="column is-flex is-flex-centered">
               <div className="card is-flex-direction-column is-flex-centered home-card">
-                <a onClick={() => startRecipe(recipe)}>
+                <a onClick={() => startRecipe(recipe)} href="#top">
                   <p
                     className={`${
-                      selectedRecipe == recipe.name
+                      selectedRecipe === recipe.name
                         ? "has-text-success"
                         : "has-text-grey"
                     } title is-4 m-2 has-text-centered`}
@@ -87,11 +86,11 @@ const Home = () => {
                     <FontAwesomeIcon
                       icon={faVial}
                       className={`${
-                        selectedRecipe == recipe.name
+                        selectedRecipe === recipe.name
                           ? "has-text-success"
                           : "has-text-grey"
                       }`}
-                      spin={selectedRecipe == recipe.name}
+                      spin={selectedRecipe === recipe.name}
                     />
                   </div>
                 </a>
@@ -100,7 +99,7 @@ const Home = () => {
           ))}
           <div className="column is-one-quarter is-flex is-flex-centered">
             <div className="card is-flex-direction-column is-flex-centered">
-              <a onClick={stopRecipe}>
+              <a onClick={stopRecipe} href="#top">
                 <p
                   className={`${
                     working ? "has-text-danger" : "has-text-grey"

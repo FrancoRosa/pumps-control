@@ -36,12 +36,12 @@ const CardManual = ({ pump, recipe }) => {
       setSeconds(elapsed);
       setFillTimeout((elapsed * (1 + timeTolerance / 100)).toFixed(2));
       setPulsesPerUnit(
-        pumpsState[pump.id].pulses_count == 0
+        pumpsState[pump.id].pulses_count === 0
           ? 1
           : pumpsState[pump.id].pulses_count
       );
     }
-  }, [end]);
+  }, [end]); // eslint-disable-line
 
   useEffect(() => {
     if (!running) {
@@ -50,7 +50,7 @@ const CardManual = ({ pump, recipe }) => {
       newCalibrations[recipe.id].config[pump.id].timeout = fillTimeout;
       setCalibrations(newCalibrations);
     }
-  }, [running]);
+  }, [running]); // eslint-disable-line
 
   useEffect(() => {
     setSeconds(0);
@@ -58,7 +58,7 @@ const CardManual = ({ pump, recipe }) => {
     resetPulses();
     setPulsesPerUnit(calibrations[recipe.id].config[pump.id].pulses);
     setFillTimeout(calibrations[recipe.id].config[pump.id].timeout);
-  }, [recipe]);
+  }, [recipe]); // eslint-disable-line
 
   const resetPulses = () => {
     let tempState = [...pumpsState];
@@ -67,7 +67,7 @@ const CardManual = ({ pump, recipe }) => {
   };
 
   const startCount = () => {
-    if (seconds == 0) {
+    if (seconds === 0) {
       startPump(pump).then(() => console.log("start pump"));
     } else {
       restartPump(pump).then(() => console.log("restart pump"));

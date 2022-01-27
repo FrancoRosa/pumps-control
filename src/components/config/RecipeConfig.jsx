@@ -8,7 +8,7 @@ const RecipeConfig = () => {
   const handleNameChange = (id, name) => {
     console.log("bip");
     setRecipes(
-      recipes.map((recipe) => (recipe.id == id ? { ...recipe, name } : recipe))
+      recipes.map((recipe) => (recipe.id === id ? { ...recipe, name } : recipe))
     );
   };
 
