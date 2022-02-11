@@ -13,6 +13,7 @@ const Home = () => {
   const setPumpsState = useStoreActions((actions) => actions.setPumpsState);
   const recipes = useStoreState((state) => state.recipes);
   const calibrations = useStoreState((state) => state.calibrations);
+  const controlType = useStoreState((state) => state.controlType);
   const [working, setWorking] = useState(false);
   const [selectedRecipe, setSelectedRecipe] = useState("");
 
@@ -33,7 +34,7 @@ const Home = () => {
       if (totalTime !== 0) {
         setSelectedRecipe(recipe.name);
         newPumps.forEach((pump) => {
-          startControlledPump(pump);
+          startControlledPump(pump, controlType);
         });
       }
     });
@@ -118,6 +119,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <p className="help is-link has-text-right">*{controlType}</p>
       </div>
     </>
   );

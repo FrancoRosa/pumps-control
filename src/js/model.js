@@ -83,6 +83,7 @@ const initial = {
   wifissid: "wifi name",
   wifipass: "wifi password",
   server: "http://us-central1-decon7-admin.cloudfunctions.net",
+  controlType: "mixed",
 };
 
 const getSavedStorage = (key) => {
@@ -133,6 +134,11 @@ const model = {
   pumpMessage: {},
   setPumpMessage: action((state, message) => {
     state.pumpMessage = message;
+  }),
+
+  controlType: getSavedStorage("controlType"),
+  setControlType: action((state, controlType) => {
+    state.controlType = controlType;
   }),
 };
 

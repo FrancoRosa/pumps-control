@@ -5,11 +5,11 @@ export const host = `http://${window.location.hostname}:9999`;
 
 export const socket = io.connect(host);
 
-export const startControlledPump = async (pump) => {
+export const startControlledPump = async (pump, controlType) => {
   console.log("... starting controlled pump");
   const { id, pulses, timeout } = pump;
   const url = `${host}/api/startcontrolled`;
-  const response = await axios.post(url, { id, pulses, timeout });
+  const response = await axios.post(url, { id, pulses, timeout, controlType });
   return response.data;
 };
 

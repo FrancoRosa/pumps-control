@@ -284,7 +284,9 @@ def index():
 
 @app.route('/api/startcontrolled', methods=['post'])
 def startcontrolled():
+    print("start controlled")
     config = request.get_json()
+    print(config)
     id = int(config['id'])
     pulses = int(config['pulses'])
     timeout = float(config['timeout'])
