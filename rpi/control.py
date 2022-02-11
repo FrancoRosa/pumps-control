@@ -120,6 +120,8 @@ notification = {
     "timestamp": timestamp(),
 }
 
+controlType = "mixed"
+
 
 def save_notification(message):
     global notification
@@ -144,7 +146,7 @@ def volume_counter():
         pump = pumps_config[id]
         pump['total_pulses'] += 1
         pump['pulses_count'] += 1
-        if pump['pulses_count'] >= pump['pulses']:
+        if controlType != "time" and (pump['pulses_count'] >= pump['pulses']):
             pump['on'] = False
             print('... sensor stopping pump', pump['id'])
 
@@ -170,7 +172,7 @@ def send_status_debug():
     global pumps_config
     while True:
         for pump in pumps_config:
-            if pump['pulses_count'] >= pump['pulses'] or pump['time_count'] >= pump['timeout']:
+            if controlType != "pulses" and (pump['time_count'] >= pump['timeout']):
                 if pump['on']:
                     pump['on'] = False
                     pump['pulses_count'] = 0
@@ -284,12 +286,12 @@ def index():
 
 @app.route('/api/startcontrolled', methods=['post'])
 def startcontrolled():
-    print("start controlled")
+    global controlType
     config = request.get_json()
-    print(config)
     id = int(config['id'])
     pulses = int(config['pulses'])
     timeout = float(config['timeout'])
+    controlType = config['controlType']
     start_pump(id, pulses, timeout)
     response = make_response(jsonify({
         "id": id,
