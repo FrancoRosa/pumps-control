@@ -147,12 +147,11 @@ def volume_counter():
         pump['total_pulses'] += 1
         pump['pulses_count'] += 1
         if controlType != "time" and (pump['pulses_count'] >= pump['pulses']):
-            pump['on'] = False
+            pump['time_count'] = round(pump['time_count'], 1)
             print('... sensor stopping pump', pump['id'])
+            pump['on'] = False
 
-        print('...', pump)
         pumps_config[id] = pump
-
         socketio.send(json.dumps(pump), broadcast=True)
 
     def keyboard_fc(button):
@@ -172,7 +171,7 @@ def send_status_debug():
     global pumps_config
     while True:
         for pump in pumps_config:
-            if controlType != "pulses" and (pump['time_count'] >= pump['timeout']):
+            if pump['pulses_count'] >= pump['pulses'] or pump['time_count'] >= pump['timeout']:
                 if pump['on']:
                     pump['on'] = False
                     pump['pulses_count'] = 0
@@ -216,9 +215,9 @@ def time_counter():
             if pump['on']:
                 pump['time_count'] += time_step
 
-                if pump['time_count'] >= pump['timeout']:
-                    pump['time_count'] = round(pump['time_count'], 1)
+                if controlType != "pulses" and (pump['time_count'] >= pump['timeout']):
                     print('... time stopping pump', pump['id'])
+                    pump['time_count'] = round(pump['time_count'], 1)
                     pump['on'] = False
                     save_pulses(total_pulses())
                     save_notification('Check pump %d' % (pump['id']+1))
@@ -292,6 +291,7 @@ def startcontrolled():
     pulses = int(config['pulses'])
     timeout = float(config['timeout'])
     controlType = config['controlType']
+    print("controlType")
     start_pump(id, pulses, timeout)
     response = make_response(jsonify({
         "id": id,
