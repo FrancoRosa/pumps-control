@@ -1,5 +1,5 @@
 from subprocess import check_output
-from os import uname
+from os import uname, chdir
 from re import search
 
 is_rpi = uname()[4] != 'x86_64'
@@ -49,6 +49,7 @@ def get_device_id():
 
 
 def get_commit():
+    chdir('/home/pi/pumps-control/rpi')
     return check_output(['git', 'log', "--pretty=format:'%h'", '-n', '1'])
 
 
