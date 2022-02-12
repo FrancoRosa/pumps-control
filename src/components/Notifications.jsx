@@ -2,6 +2,7 @@ import { useStoreActions, useStoreState } from "easy-peasy";
 import { useEffect, useState } from "react";
 
 const Notifications = () => {
+  const controlType = useStoreState((state) => state.controlType);
   const pumpMessage = useStoreState((state) => state.pumpMessage);
   const { id, on, timeout, time_count } = pumpMessage;
   const pumps = useStoreState((state) => state.pumps);
@@ -12,7 +13,7 @@ const Notifications = () => {
   useEffect(() => {
     console.log("...on changed");
     if (!on) {
-      if (time_count > timeout) {
+      if (controlType != "time" && time_count > timeout) {
         console.log("timeout:", timeout, "time_count:", time_count);
         setNotifications([...notifications, `Check ${pumps[id].name} pump`]);
         setPumpsState(
